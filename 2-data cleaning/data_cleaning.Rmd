@@ -1,0 +1,407 @@
+---
+title: "Data Cleaning in R"
+author: "John Brandt, Yale F&ES"
+date: "March 15, 2018"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, size=3, comment=NA)
+sales <- read.csv("Workshops/sales.csv", na.strings=c("NULL", "NA"))
+```
+
+## Common Tasks
+
+* Data class
+* Creating dataframes
+* Updating column names
+* Combining columns
+* Transposing
+* Rownames/column names
+* Concatenating
+* Creating lists
+* Subsetting (indices, logic, which)
+* Merging
+* Reclassification
+* Dealing with NA values w/ logic
+* Strings
+* Functions
+* lapply
+
+## Basic background
+
+* dataframe$column
+* read.csv("data.csv")
+* write.csv(object, "object.csv")
+* head()
+* str()
+* colnames()
+* summary()
+* unique()
+* class()
+* levels()
+* nrow(), length()
+* dataframe[row, column]
+
+## Structure
+
+`as.Date`, `as.String`, `as.Numeric`, `as.Factor`
+use `class()` to find type
+
+```{r}
+class(sales$event_dt)
+sales$event_dt <- as.Date(sales$event_dt)
+class(sales$event_dt)
+```
+
+## Splitting columns
+
+```{r}
+sales$event_dt[1:3]
+strsplit(as.character(sales$event_dt[1:3]), "-")
+```
+
+## Creating new dataframes
+
+```{r}
+new.df <- data.frame(matrix(nrow=5, ncol=3))
+```
+
+## Updating column names
+
+```{r}
+colnames(new.df) <- c("column.1", "column.2", "column.3")
+new.df$column.1 <- c(1,2,3,4,5)
+new.df$column.2 <- c("a", "b", "c", "d", "e")
+new.df
+```
+
+## Renaming singular column
+
+```{r, eval = FALSE}
+colnames(new.df[colnames(new.df) == "column.2"]) 
+        <- "whatever"
+```
+
+## Combining columns
+```{r}
+new.df$column.3 <- paste(new.df$column.1,
+                new.df$column.2, sep="")
+new.df$column.3
+```
+
+## Transposing
+
+`t()` returns a nested list. A dataframe must be specified if you want a dataframe.
+
+```{r}
+new.df.t <- as.data.frame(t(new.df))
+new.df.t
+```
+
+## Rownames/colnames
+
+```{r message=FALSE, warning=FALSE}
+require(tibble)
+rownames_to_column(new.df.t)
+```
+
+## Concatenating dataframes
+
+```{r}
+new.df.2 <- new.df
+rbind(new.df, new.df.2)
+```
+
+## Creating new lists
+
+```{r}
+mylist <- rep(NA, nrow(sales)/500)
+
+mylist
+```
+
+## Subsetting by indices
+
+R makes use of the [row,column] notation
+
+```{r}
+sales[5:10, c(3,9)]
+```
+
+## Subsetting by >=, ==, <=, !=
+
+R accepts logical statements within a [row, column] subsetting argument
+
+```{r}
+sales[sales$age_yr>70 & !is.na(sales$age_yr),
+      c(34,14,15)]
+```
+
+## Subsetting by %in%
+
+```{r}
+sales[sales$venue_state %in% c("RHODE ISLAND", 
+                               "MANITOBA"), c(18,26)]
+```
+
+## Subsetting by which
+
+If you have 500 columns, you may not know which column index to subset by in the previous example. Here the `age` column is extracted using `which`.
+
+```{r}
+sales[sales$age_yr>70 & !is.na(sales$age_yr),
+      c(which(colnames(sales) %in% 
+                c("age_yr","tickets_purchased_qty")))]
+```
+
+## Which.max, which.min
+
+`which.max` and `which.min` are useful for removing known outliers.
+
+```{r eval=FALSE}
+sales[-c(which.max(sales$income_amt)),]
+```
+
+## Merging
+
+```{r, eval=FALSE}
+merged <- merge(x1, x2, by.x="column.x", by.y="column.y")
+```
+
+
+## Reclassifying
+
+```{r}
+levels(cut(sales$trans_face_val_amt, 5))
+```
+
+
+## Removing NA values
+
+```{r}
+new.df[2,3] <- NA
+new.df[1,2] <- NA
+new.df[1,3] <- NA
+new.df
+```
+## Na.omit
+
+```{r}
+na.omit(new.df)
+```
+
+## Column NAs
+
+```{r}
+new.df[, colSums(is.na(new.df)) <= 1]
+```
+## Row NAs
+
+```{r}
+new.df[rowSums(is.na(new.df)) <= 1,]
+```
+
+## Converting date/time
+
+lubridate package
+
+```{r, eval=FALSE}
+year()
+month()
+day()
+week()
+as_date()
+as_datetime()
+time_length()
+```
+
+## Lubridate examples
+
+```{r message=FALSE, warning=FALSE}
+library(lubridate)
+dates <- as.Date(sales$event_dt[1:3])
+dates
+```
+
+```{r}
+year(dates)
+month(dates)
+week(dates)
+day(dates)
+print(wday(dates, label=TRUE), max.levels=0)
+```
+
+## More examples
+
+```{r}
+floor_date(dates, "month")
+ceiling_date(dates, "season")
+```
+
+```{r}
+date1 <- "2009-08-03 12:01:59"
+as.Date(date1) # uh-oh
+```
+
+```{r}
+as_datetime(date1)
+```
+
+## Strings
+
+grepl returns a logical TRUE/FALSE
+
+```{r, eval=FALSE}
+files <- files[grepl('name', files) == TRUE]
+```
+
+```{r, eval=FALSE}
+gsub("hello","goodbye",files)
+```
+
+## Creating functions
+
+```{r}
+myfunction <- function(x) {
+  z <- x + 1
+  return(z)
+}
+
+myfunction(3)
+```
+
+## Function to calculate percentage of NA in columns
+
+```{r}
+calc.na <- function(x, data) {
+    calc <- sum(is.na(data[[x]])/nrow(data))
+    return(unlist(calc))
+}
+
+calc.na("onsale_dt", sales)
+```
+
+## What about the amount of every column?
+
+### Option 1: For loop
+
+Problem 1: results duplicated
+Problem 2: returns list indices as column names, which cannot be iterated over or used in the future.
+
+```{r}
+results <- rep(NA, length(colnames(sales)))
+
+for (i in colnames(sales)) {
+  results[i] <- calc.na(i, sales)
+}
+
+results[60]
+```
+
+## Option 2: lapply
+
+```{r}
+unlist(lapply(colnames(sales), calc.na, sales))
+```
+
+## Function - example 2
+
+```{r, eval=FALSE}
+toMatch <- c("x", "y", "z", "...")
+sentences <- c("sentence 1", "sentence 2", "...")
+
+subset_sentences <- function(Match, sentences){
+    sentences[grep(Match,sentences)]
+}
+
+subsetted <- lapply(toMatch, subset_sentences, sentences)
+```
+
+
+## Read in data
+```{r message=FALSE, warning=FALSE}
+require(dplyr)
+require(lubridate)
+sales <- read.csv("Workshops/sales.csv",
+                  na.strings=c("NULL", "NA"))
+```
+
+## Function
+```{r}
+perc.na <- function(data) {
+  sing.na <- function(x) {
+    sum(is.na(data[[x]])/nrow(data))
+  }
+  return(unlist(lapply(colnames(data), sing.na)))
+}
+
+sales.na <- perc.na(sales)
+```
+
+## Remove outliers, select columns
+```{r}
+sales <- sales[,-which(sales.na >= 0.9)]
+```
+
+```{r}
+sales <- sales %>%
+  select(-c(X, primary_act_id, secondary_act_id,
+            primary_act_id, secondary_act_id, 
+            purch_party_lkup_id,
+            web_session_cookie_val))
+```
+
+## Reclassify
+
+```{r}
+sales$secondary <- 0
+sales$secondary[!is.na(sales$secondary_act_name)] <- 1
+sales$secondary <- as.factor(sales$secondary)
+```
+
+## Calc new columns
+
+```{r}
+sales$onsale_dt <- as.Date(sales$onsale_dt)
+sales$event_dt <- as.Date(sales$event_dt)
+sales$sales_ord_tran_dt <-
+  as.Date(sales$sales_ord_tran_dt)
+
+sales$sale_length <- sales$event_dt - sales$onsale_dt
+sales$purchased_date <- sales$sales_ord_tran_dt -
+  sales$onsale_dt
+
+sales$event_hour <- hour(sales$event_date_time)
+```
+
+## Remove unnecessary columns before aggregating
+
+```{r}
+sales <- sales[,-c(1,2,3,4,7,8,9,13,
+                   15,16,17,18,19,20,
+                   23,24,25,26,27)]
+```
+
+## Datetime conversions
+
+```{r}
+sales$month <- month(sales$event_dt)
+sales$year <- year(sales$event_dt)
+sales$month_year <- paste(sales$month, sales$year)
+```
+
+## dplyr for final data
+
+Go to Matt's data exploration workshop to learn more about this!
+
+```{r message=FALSE, warning=FALSE}
+sales.y <- sales %>%
+  select(-c(minor_cat_name, venue_city, event_dt, 
+            month, month_year, secondary,
+            major_cat_name)) %>%
+  group_by(year, delivery_type_cd,
+           venue_state) %>%
+  summarise_all(c("mean", "sum"))
+```
+

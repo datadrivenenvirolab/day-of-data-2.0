@@ -1,0 +1,336 @@
+---
+title: "ggplot2"
+author: "John Brandt"
+date: "3/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Read in the data
+
+```{r message=FALSE, warning=FALSE}
+require(ggplot2)
+employment <- read.csv("data/recent-grads.csv")
+employment <- na.omit(employment)
+employment <- employment[-which(employment$Median > 100000),]
+employment$science.other <- "Science"
+employment$science.other[employment$Major_category %in%
+                           c("Arts",
+                             "Business",
+                             "Communications & Journalism",
+                             "Education",
+                             "Humanities & Liberal Arts",
+                             "Industrial Arts & Consumer Services",
+                             "Interdisciplinary",
+                             "Law & Public Policy",
+                             "Psychology & Social Work",
+                             "Social Science")] <- "Humanities"
+
+#which(employment$Major=="ACTUARIAL SCIENCE")
+
+employment$science.other[6] <- "Science"
+
+write.csv(employment, "employment.csv")
+```
+
+## Employment data - Begin
+
+```{r message=FALSE, warning=FALSE}
+plot1 <- ggplot(data=employment, aes(x=ShareWomen, y=Median))+
+  geom_point()+
+  geom_smooth(se=FALSE)
+
+print(plot1)
+```
+
+## Employment data - axis labels & theme_bw
+
+```{r message=FALSE, warning=FALSE}
+plot1 <- ggplot(data=employment, aes(x=ShareWomen, y=Median/1000))+
+  geom_point()+
+  geom_smooth(se=FALSE, color="grey50")+
+  theme_bw()+
+  xlab("Proportion of women")+
+  ylab("Income (1,000 USD)")+
+  ggtitle("Higher earning college majors are disproportionately men")
+
+print(plot1)
+
+```
+
+## Employment data - coloring
+
+```{r message=FALSE, warning=FALSE}
+plot1 <- ggplot(data=employment, aes(x=ShareWomen, y=Median/1000))+
+  geom_point(alpha=0.9, aes(color=science.other))+
+  geom_smooth(se=FALSE, color="grey50")+
+  theme_bw()+
+  xlab("Proportion of women")+
+  ylab("Income (1,000 USD)")+
+  ggtitle("Higher earning college majors are disproportionately men")+
+  scale_color_brewer(palette="Set1")
+
+print(plot1)
+```
+
+## Employment data - advanced themes
+
+```{r message=FALSE, warning=FALSE}
+plot1 <- ggplot(data=employment, aes(x=ShareWomen, y=Median/1000))+
+  geom_point(alpha=0.9, aes(color=science.other))+
+  geom_smooth(se=FALSE, color="grey50")+
+  theme_bw()+
+  xlab("Proportion of women")+
+  ylab("Income (1,000 USD)")+
+  ggtitle("Higher earning college majors are disproportionately men")+
+  scale_color_brewer(palette="Set1")+
+  theme(panel.grid.minor=element_blank(),
+        panel.grid.major.x=element_blank(),
+        legend.title = element_blank(),
+        legend.position = c(0.85, 0.8),
+        legend.background=element_blank(),
+        legend.text = element_text(size=10))+
+  scale_x_continuous(labels=c("0%", "25%", "50%", "75%","100%"))
+
+print(plot1)
+```
+
+## Employment data - upper + lower bounds
+
+```{r message=FALSE, warning=FALSE}
+min <- loess(employment$P25th/1000 ~ employment$ShareWomen)$fitted
+max <- loess(employment$P75th/1000 ~ employment$ShareWomen)$fitted
+
+plot1 <- ggplot(data=employment, aes(x=ShareWomen, y=Median/1000))+
+  geom_point(alpha=0.9, aes(color=science.other))+
+  geom_smooth(se=FALSE, color="grey50")+
+  geom_smooth(aes(x=ShareWomen, y=P25th/1000), se=FALSE, color="grey85")+
+  geom_smooth(aes(x=ShareWomen, y=P75th/1000), se=FALSE, color="grey85")+
+  geom_ribbon(aes(ymin=min, ymax=max), alpha=0.08)+
+  theme_bw()+
+  xlab("Proportion of women")+
+  ylab("Income (1,000 USD)")+
+  ggtitle("Higher earning college majors are disproportionately men")+
+  scale_color_brewer(palette="Set1")+
+  theme(panel.grid.minor=element_blank(),
+        panel.grid.major.x=element_blank(),
+        legend.title = element_blank(),
+        legend.position = c(0.85, 0.8),
+        legend.background=element_blank(),
+        legend.text = element_text(size=10))+
+  scale_x_continuous(labels=c("0%", "25%", "50%", "75%","100%"))
+
+print(plot1)
+```
+
+
+## Employment data (bar) - begin
+
+```{r}
+plot2 <- ggplot(data=employment, aes(x=Major_category, y=mean(Median)))+
+  geom_col()
+
+print(plot2)
+```
+
+## Employment data (bar) - restructure data
+
+```{r message=FALSE, warning=FALSE}
+require(dplyr)
+
+employment.sub <- employment[employment$Sample_size >= 50,]
+
+top <- employment.sub %>%
+  arrange(desc(Median))
+top <- top[0:10,]
+
+bottom <- employment.sub %>%
+  arrange(Median)
+bottom <- bottom[0:10,]
+
+topbottom <- rbind(top, bottom)
+
+topbottom$wage.diff <- topbottom$Median - mean(employment$Median)
+
+head(topbottom[,c(3,16)])
+```
+
+## Plot 2 - Simple plot + coord_flip + themes + labels
+
+```{r}
+plot2.f <- ggplot(data=topbottom, aes(x=reorder(Major, Median), y=Median/1000))+
+  geom_col()+
+  coord_flip()+
+  theme_bw()+
+  xlab("")+
+  ylab("Earnings (1,000 USD)")+
+  ggtitle("Earnings of top and bottom ten majors")
+
+print(plot2.f)
+```
+
+## Plot 2 - Coloring + advanced themes
+
+```{r}
+plot2.f <- ggplot(data=topbottom, aes(x=reorder(Major, Median), y=Median/1000))+
+  geom_col(aes(fill=science.other))+
+  coord_flip()+
+  theme_bw()+
+  xlab("")+
+  ylab("Earnings (1,000 USD)")+
+  ggtitle("Earnings of top and bottom ten majors")+
+  theme(legend.position=c(0.8, 0.2),
+        legend.background=element_rect(fill="transparent"),
+        legend.title=element_blank(),
+        legend.text = element_text(size=10),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank())
+
+print(plot2.f)
+```
+
+## Plot 2 - Mean line + annotation
+
+```{r}
+plot2.f <- ggplot(data=topbottom, aes(x=reorder(Major, Median), y=Median/1000))+
+  geom_col(aes(fill=science.other))+
+  geom_hline(aes(yintercept=mean(employment$Median/1000)), linetype="dashed", color="grey10")+
+  scale_fill_brewer(palette="Set1")+
+  coord_flip()+
+  theme_bw()+
+  theme(legend.position=c(0.8, 0.2),
+        legend.background=element_rect(fill="transparent"),
+        legend.title=element_blank(),
+        legend.text = element_text(size=10),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank())+
+  annotate("text", x=1, y=50, label="Median wage")+
+  xlab("")+
+  ylab("Earnings (1,000 USD)")+
+  ggtitle("Earnings of top and bottom ten majors")
+
+print(plot2.f)
+```
+
+
+## Weather - begin
+
+```{r}
+los.angeles <- read.csv("data/KCQT.csv")
+los.angeles$date <- as.Date(los.angeles$date)
+```
+
+```{r}
+plot3 <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+  geom_line()
+
+print(plot3)
+```
+
+
+## Weather - theme_bw + labels
+
+```{r}
+plot3 <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+  geom_line()+
+  theme_bw()+
+  xlab("")+
+  ylab("Temperature (F)")+
+  ggtitle("2014 Weather in Los Angeles, CA")
+  
+
+print(plot3)
+```
+
+## Weather - units
+
+```{r}
+plot3 <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+  geom_line()+
+  theme_bw()+
+  xlab("")+
+  ylab("Temperature (F)")+
+  ggtitle("2014 Weather in Los Angeles, CA")+
+  scale_y_continuous(breaks=c(seq(20,110, 10)))+
+  scale_x_date(expand=c(0, 0), date_breaks="1 month", date_labels = "%b")
+  
+
+print(plot3)
+```
+
+## Weather - overlay average + record
+
+```{r}
+plot3 <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+  theme_bw()+
+  geom_linerange(aes(ymin=record_min_temp, ymax=record_max_temp, color="Record"), size=1.5)+
+  geom_linerange(aes(ymin=actual_min_temp, ymax=actual_max_temp, color="Actual"), size=1.5)+
+  geom_linerange(aes(ymin=average_min_temp, ymax=average_max_temp, color="Average"), size=1.5, alpha=0.2) +
+  geom_point(size=0.7, color="grey30")+
+  scale_y_continuous(breaks=c(seq(20,110, 10)))+
+  scale_x_date(expand=c(0, 0), date_breaks="1 month", date_labels = "%b") + 
+  xlab("")+
+  ylab("Temperature (F)")+
+  ggtitle("2014 Weather in Los Angeles, CA")
+
+print(plot3)
+```
+
+
+## Weather - colors + themes
+
+```{r}
+plot3.f <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+  theme_bw()+
+  geom_linerange(aes(ymin=record_min_temp, ymax=record_max_temp, color="Record"), size=1.5)+
+  geom_linerange(aes(ymin=actual_min_temp, ymax=actual_max_temp, color="Actual"), size=1.5)+
+  geom_linerange(aes(ymin=average_min_temp, ymax=average_max_temp, color="Average"), size=1.5, alpha=0.2) +
+  geom_point(size=0.7, color="grey30")+
+  geom_point(data=subset(los.angeles, actual_max_temp >= record_max_temp), aes(y=actual_max_temp), color="red", size = 0.8)+
+  scale_colour_manual(labels=c("Actual", "Average", "Record"), values=c("grey70", "grey60", "bisque2"))+
+  theme(panel.grid.minor=element_blank(),
+        panel.grid.major=element_line(linetype="dashed"),
+        legend.title=element_blank(),
+        legend.direction = "horizontal",
+        legend.position = c(0.18,0.05),
+        legend.background=element_rect(colour="transparent", fill="transparent"),
+        panel.background = element_rect(fill = NA))+
+  scale_y_continuous(breaks=c(seq(20,110, 10)))+
+  scale_x_date(expand=c(0, 0), date_breaks="1 month", date_labels = "%b") + 
+  xlab("")+
+  ylab("Temperature (F)")+
+  ggtitle("2014 Weather in Los Angeles, CA")+
+  annotate("text", x=as.Date("2014-10-06"), y=los.angeles$actual_max_temp[which.max(los.angeles$actual_max_temp)] + 0.5, label="- Record", color="red")
+
+print(plot3.f)
+```
+
+## Weather data - advanced
+
+```{r}
+plot3.f <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+  theme_bw()+
+  geom_linerange(aes(ymin=record_min_temp, ymax=record_max_temp, color="Record"), size=1.5)+
+  geom_linerange(aes(ymin=actual_min_temp, ymax=actual_max_temp, color="Actual"), size=1.5)+
+  geom_linerange(aes(ymin=average_min_temp, ymax=average_max_temp, color="Average"), size=1.5, alpha=0) +
+  geom_ribbon(aes(ymin=average_min_temp, ymax=average_max_temp), color="transparent", fill="grey50", size=0.5, alpha=0.5) +
+  geom_point(size=0.7, color="grey30")+
+  scale_colour_manual(name="x", labels=c("Actual", "Average", "Record"), values=c("grey70", "grey90", "bisque2"))+
+  theme(panel.grid.minor=element_blank(),
+        panel.grid.major=element_line(linetype="dashed"),
+        legend.title=element_blank(),
+        legend.direction = "horizontal",
+        legend.position = c(0.18,0.05),
+        legend.background=element_rect(colour="transparent", fill="transparent"))+
+  scale_y_continuous(breaks=c(20,30,40,50,60,70,80,90,100,110,120))+
+  scale_x_date(expand=c(0, 0), date_breaks="1 month", date_labels = "%b") + 
+  xlab("")+
+  ylab("Temperature (F)")+
+  ggtitle("2014 Weather in Los Angeles, CA")
+
+print(plot3.f)
+```
+
