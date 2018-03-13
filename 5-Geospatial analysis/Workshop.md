@@ -1,9 +1,9 @@
-<p align="center"><h1>  <b>Geospatial Software Analysis - An Introduction to Google Earth Engine</b>  </h1></p>
+<p align="center"><h3>  <b>Geospatial Software Analysis - An Introduction to Google Earth Engine</b>  </h3></p>
 
 <br><br>
 
 
-<p align="center"><huge> <b>TC Chakraborty</b>   </huge></p>
+<p align="center"><h4> <b>TC Chakraborty</b>   </h4></p>
 
 
 <br><br>
