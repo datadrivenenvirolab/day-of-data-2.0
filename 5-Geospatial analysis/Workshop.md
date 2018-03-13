@@ -1,8 +1,17 @@
-<p align="center">  Geospatial Software Analysis - An Introduction to Google Earth Engine  </p>
+<p align="center">  **Geospatial Software Analysis - An Introduction to Google Earth Engine**  </p>
 
-<p align="center">  TC Chakraborty   </p>
+<br><br>
 
-<p align="center">  March 16, 2018  </p>
+
+<p align="center">  **TC Chakraborty**   </p>
+
+
+<br><br>
+
+
+<p align="center">  **March 16, 2018**  </p>
+<br><br>
+<br><br>
 
 # Introduction
 
