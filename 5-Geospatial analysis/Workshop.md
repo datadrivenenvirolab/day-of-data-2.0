@@ -1,4 +1,4 @@
-<p align="center"><font size="15">  <b>Geospatial Software Analysis - An Introduction to Google Earth Engine</b>  </font></p>
+<p align="center"><font size="25">  <b>Geospatial Software Analysis - An Introduction to Google Earth Engine</b>  </font></p>
 
 <br><br>
 
