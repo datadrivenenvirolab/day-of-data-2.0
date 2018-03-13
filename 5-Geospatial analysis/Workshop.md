@@ -3,13 +3,13 @@
 <br><br>
 
 
-<p align="center">  **TC Chakraborty**   </p>
+<p align="center"> <b>TC Chakraborty</b>   </p>
 
 
 <br><br>
 
 
-<p align="center">  **March 16, 2018**  </p>
+<p align="center">  <b>March 16, 2018</b>  </p>
 <br><br>
 <br><br>
 
