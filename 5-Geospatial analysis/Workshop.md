@@ -1,13 +1,13 @@
 <center>
-  <Geospatial Software Analysis - An Introduction to Google Earth Engine>
+  <h1>Geospatial Software Analysis - An Introduction to Google Earth Engine</h1>
 </center>
 
 <center>
-  <TC Chakraborty>
+  <h1>TC Chakraborty</h1>
 </center>
 
 <center>
-  <March 16, 2018>
+  <h1>March 16, 2018</h1>
 </center>
 
 # Introduction
