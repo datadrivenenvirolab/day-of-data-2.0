@@ -1,14 +1,14 @@
-<p align="center">
+<center>
   <Geospatial Software Analysis - An Introduction to Google Earth Engine>
-</p>
+</center>
 
-<p align="center">
+<center>
   <TC Chakraborty>
-</p>
+</center>
 
-<p align="center">
+<center>
   <March 16, 2018>
-</p>
+</center>
 
 # Introduction
 
