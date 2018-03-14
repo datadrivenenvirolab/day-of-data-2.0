@@ -14,8 +14,21 @@
 <br><br><br><br>
 
 # Introduction
+Collection, visualization, and analysis of geographical or spatial data.
+
+# Data types
+
+-Vector
+Data representing lat-long coordinates
+
+![Points](/images/points-vector.png)
+
+![Lines](/images/line-vector.png)
+
+![Polygons](/images/polygon-vector.png)
 
 
+-Raster
 
 ## image.select
 - Creates a new image containing only those bands of a specified image that have a specified name, index, or RE2-compatible regex.
