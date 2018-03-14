@@ -371,17 +371,16 @@ weather <- unlist(rbind(weather[sapply(weather,
 ```
 
 ```{r}
-weather.times <- weather[(length(weather)-1)]$timestamp
-weather.readings <- do.call("rbind", 
-                    weather[length(weather)]$readings)
+weather.times <- weather[seq_along(weather) %% 2 > 0]
+weather.times <- unlist(weather.times)
 
-final_readings <- weather[length(weather)]$readings
-
-for (i in c(1:length(final_readings))) {
-  final_readings[[i]][3] <- i
+weather.readings <- weather[seq_along(weather) %% 2 == 0]
+for (i in c(1:length(weather.readings))) {
+  weather.readings[[i]][[1]][3] <- i
 }
 
-weather.readings <- do.call("rbind", final_readings)
+weather.readings <- do.call("rbind", weather.readings)
+weather.readings <- do.call("rbind", weather.readings)
 ```
 
 ## Continued
@@ -389,7 +388,11 @@ weather.readings <- do.call("rbind", final_readings)
 ```{r}
 weather.readings <- spread(weather.readings, 
                            station_id, value)
-weather.readings$date <- weather.times
+
+weather.times <- as.data.frame(weather.times)
+weather.times$V3 <- seq(1, length(weather.times))
+weather.readings <- merge(weather.readings, 
+                          weather.times, by="V3")
 ```
 
 ## Finished
