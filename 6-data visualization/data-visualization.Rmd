@@ -1,7 +1,7 @@
 ---
 title: "ggplot2"
 author: "John Brandt"
-date: "3/10/2018"
+date: "3/15/2018"
 output: html_document
 ---
 
@@ -153,8 +153,6 @@ bottom <- bottom[0:10,]
 
 topbottom <- rbind(top, bottom)
 
-topbottom$wage.diff <- topbottom$Median - mean(employment$Median)
-
 head(topbottom[,c(3,16)])
 ```
 
@@ -283,7 +281,7 @@ print(plot3)
 ## Weather - colors + themes
 
 ```{r}
-plot3.f <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+plot3 <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
   theme_bw()+
   geom_linerange(aes(ymin=record_min_temp, ymax=record_max_temp, color="Record"), size=1.5)+
   geom_linerange(aes(ymin=actual_min_temp, ymax=actual_max_temp, color="Actual"), size=1.5)+
@@ -296,8 +294,7 @@ plot3.f <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
         legend.title=element_blank(),
         legend.direction = "horizontal",
         legend.position = c(0.18,0.05),
-        legend.background=element_rect(colour="transparent", fill="transparent"),
-        panel.background = element_rect(fill = NA))+
+        legend.background=element_rect(colour="transparent", fill="transparent"))+
   scale_y_continuous(breaks=c(seq(20,110, 10)))+
   scale_x_date(expand=c(0, 0), date_breaks="1 month", date_labels = "%b") + 
   xlab("")+
@@ -305,13 +302,13 @@ plot3.f <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
   ggtitle("2014 Weather in Los Angeles, CA")+
   annotate("text", x=as.Date("2014-10-06"), y=los.angeles$actual_max_temp[which.max(los.angeles$actual_max_temp)] + 0.5, label="- Record", color="red")
 
-print(plot3.f)
+print(plot3)
 ```
 
 ## Weather data - advanced
 
 ```{r}
-plot3.f <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
+plot3 <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
   theme_bw()+
   geom_linerange(aes(ymin=record_min_temp, ymax=record_max_temp, color="Record"), size=1.5)+
   geom_linerange(aes(ymin=actual_min_temp, ymax=actual_max_temp, color="Actual"), size=1.5)+
@@ -331,6 +328,6 @@ plot3.f <- ggplot(data=los.angeles, aes(x=date, y=actual_mean_temp))+
   ylab("Temperature (F)")+
   ggtitle("2014 Weather in Los Angeles, CA")
 
-print(plot3.f)
+print(plot3)
 ```
 

@@ -34,7 +34,7 @@ ui <- fluidPage(
            helpText("Explore relationships between fuel efficiency and vehicle properties"),
            selectInput("yvar", "Y-axis variable", axis_vars, selected = "Horsepower"),
            selectInput("xvar", "X-axis variable", axis_vars, selected = "MPG"),
-           selectInput("loess", "Linear model variable", factor_vars, selected = "Number_cylinders"),
+           selectInput("lmodel", "Linear model variable", factor_vars, selected = "Number_cylinders"),
            sliderInput("range", label= "Horsepower:",min = 0, max = 350, value = c(0,350))
     ),
     column(9,
@@ -63,7 +63,7 @@ server <- function(input, output) {
     yvar_name <- names(axis_vars)[axis_vars == input$yvar]
     xvar <<- prop("x", as.symbol(input$xvar))
     yvar <<- prop("y", as.symbol(input$yvar))
-    factorvar <<- prop("factor", as.symbol(input$loess))
+    factorvar <<- prop("factor", as.symbol(input$lmodel))
 
     data <- data[data$Horsepower >= input$range[1],]
     data <- data[data$Horsepower <= input$range[2],]

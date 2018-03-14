@@ -3,7 +3,21 @@ title: "Rshiny"
 author: "John Brandt"
 date: "3/15/2018"
 output: beamer_presentation
+fontsize: 3pt
 ---
+
+```{r echo=FALSE}
+#knitr::knit_hooks$set(mysize = function(before, options, envir) {
+#  if (before) 
+#    return(options$size)
+#})
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
 
 ```{r setup, include= FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
@@ -11,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 
 ## Packages & Data
 
-```{r}
+```{r, size='tiny'}
 library(shiny)
 library(ggvis)
 library(tibble)
@@ -27,7 +41,7 @@ colnames(data) <- c("MPG", "Number_cylinders",
 
 ## Process data
 
-```{r}
+```{r size='tiny'}
 data$Transmission[data$Transmission == 0 ] <- "Automatic"
 data$Transmission[data$Transmission == 1] <- "Manual"
 data$Transmission <- factor(data$Transmission) 
@@ -95,7 +109,7 @@ selectInput("yvar", "Y-axis variable", axis_vars,
     selected = "Horsepower"),
 selectInput("xvar", "X-axis variable", axis_vars,
     selected = "MPG"),
-selectInput("loess", "Linear model variable", 
+selectInput("lmodel", "Linear model variable", 
             factor_vars, 
     selected = "Number_cylinders"),
 sliderInput("range", label= "Horsepower:",min = 0, 
@@ -144,7 +158,7 @@ server <- function(input, output) {
     yvar_name <- names(axis_vars)[axis_vars == input$yvar]
     xvar <<- prop("x", as.symbol(input$xvar))
     yvar <<- prop("y", as.symbol(input$yvar))
-    factorvar <<- prop("factor", as.symbol(input$loess))
+    factorvar <<- prop("factor", as.symbol(input$lmodel))
 ```
 
 ## Update the dataframe used & create ggvis

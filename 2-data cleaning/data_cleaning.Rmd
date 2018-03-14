@@ -6,7 +6,15 @@ output: beamer_presentation
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, size=3, comment=NA)
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+
+knitr::opts_chunk$set(echo = TRUE, comment=NA, size='normalsize')
+
 sales <- read.csv("Workshops/sales.csv", na.strings=c("NULL", "NA"))
 ```
 
@@ -318,12 +326,79 @@ subset_sentences <- function(Match, sentences){
 subsetted <- lapply(toMatch, subset_sentences, sentences)
 ```
 
+## Examples
 
-## Read in data
+## Example 1
+
+Example of creating list of dates to loop over
+
+```{r}
+dates <- seq(ymd_hms('2018-03-08 00:00:00'), 
+             ymd_hms('2018-03-12 23:00:00'), 
+             by="1 hour")
+
+dates <- as.character(dates)
+
+for (i in seq_along(dates)) {
+  dates[i] <- gsub(" ", "T", dates[i])
+}
+
+dates[1:5]
+```
+
+## Read in RDS
+
+Data is saved as an RDS because it is a recursively nested list
+
 ```{r message=FALSE, warning=FALSE}
 require(dplyr)
 require(lubridate)
-sales <- read.csv("Workshops/sales.csv",
+require(tidyr)
+weather <- readRDS("data/scraped_data.rds")
+class(weather)
+```
+
+## Data
+
+![](nested_list.png)
+
+## Cleaning
+
+```{r}
+weather <- unlist(rbind(weather[sapply(weather, 
+                  length)>0]), 
+                  recursive=FALSE)
+```
+
+```{r}
+weather.times <- weather[(length(weather)-1)]$timestamp
+weather.readings <- do.call("rbind", 
+                    weather[length(weather)]$readings)
+
+final_readings <- weather[length(weather)]$readings
+
+for (i in c(1:length(final_readings))) {
+  final_readings[[i]][3] <- i
+}
+
+weather.readings <- do.call("rbind", final_readings)
+```
+
+## Continued
+
+```{r}
+weather.readings <- spread(weather.readings, 
+                           station_id, value)
+weather.readings$date <- weather.times
+```
+
+## Finished
+
+![](cleaned.png)
+
+## Example 2
+```{r message=FALSE, warning=FALSE}
+sales <- read.csv("data/sales.csv",
                   na.strings=c("NULL", "NA"))
 ```
 
