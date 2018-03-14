@@ -21,11 +21,11 @@ Collection, visualization, and analysis of geographical or spatial data.
 -Vector
 Data representing lat-long coordinates
 
-![Points](https://github.com/datadrivenyale/day-of-data-2.0/tree/master/5-Geospatial%20analysis/images/points-vector.png?raw=true "Title")
+![Points](/images/points-vector.png?raw=true "Title")
 
-![Lines](https://github.com/datadrivenyale/day-of-data-2.0/tree/master/5-Geospatial%20analysis/images/line-vector.png?raw=true "Title")
+![Lines](/images/line-vector.png?raw=true "Title")
 
-![Polygons](https://github.com/datadrivenyale/day-of-data-2.0/tree/master/5-Geospatial%20analysis/images/polygon-vector.png?raw=true "Title")
+![Polygons](/images/polygon-vector.png?raw=true "Title")
 
 
 -Raster
