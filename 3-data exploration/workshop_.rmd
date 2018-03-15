@@ -473,8 +473,3 @@ df %>%
 * feed your pipes into ggplot2
 * explore your data by asking it questions
 * *keep asking questions!*
-
-#### Feel free to email me! 
-#### Greenisagoodcolor@gmail.com
-
-
