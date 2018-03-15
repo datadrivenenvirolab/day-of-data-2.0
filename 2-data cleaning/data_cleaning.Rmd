@@ -388,16 +388,43 @@ weather.readings <- do.call("rbind", weather.readings)
 ```{r}
 weather.readings <- spread(weather.readings, 
                            station_id, value)
+```
 
-weather.times <- as.data.frame(weather.times)
-weather.times$V3 <- seq(1, length(weather.times))
+```{r try2}
+weather.times.df <- as.data.frame(seq
+                    (1, length(weather.times)))
+weather.times.df$date <- weather.times
+colnames(weather.times.df)[1] <- "V3"
+```
+
+```{r try3}
 weather.readings <- merge(weather.readings, 
-                          weather.times, by="V3")
+                          weather.times.df, by="V3")
+colnames(weather.readings)[19] <- "date"
 ```
 
 ## Finished
 
 ![](cleaned.png)
+
+## Join metadata
+
+```{r message=FALSE, warning=FALSE}
+require(reshape2)
+weather.metadata <- read.csv("data/weather.metadata.csv")
+weather.melted <- melt(weather.readings, id.vars="date")
+weather.joined <- merge(weather.melted, weather.metadata, 
+                        by.x="variable", by.y="id")
+weather.joined$date <- unlist(weather.joined$date)
+weather.joined$day <- as_date(weather.joined$date)
+```
+
+## Done!
+
+```{r}
+weather.joined[1:5,c(9,3,7,8)]
+```
+
 
 ## Example 2
 ```{r message=FALSE, warning=FALSE}
