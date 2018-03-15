@@ -117,6 +117,19 @@ new.df$column.3 <- paste(new.df$column.1,
 new.df$column.3
 ```
 
+## Long/wide
+
+```{r}
+long <- gather(new.df, key, value)
+long[1:3,]
+```
+
+```{r}
+long$ID <- rep(seq(1:5),3)
+wide <- spread(long, key, value)
+wide[1:3,2:4]
+```
+
 ## Transposing
 
 `t()` returns a nested list. A dataframe must be specified if you want a dataframe.
@@ -196,13 +209,11 @@ sales[-c(which.max(sales$income_amt)),]
 merged <- merge(x1, x2, by.x="column.x", by.y="column.y")
 ```
 
-
 ## Reclassifying
 
 ```{r}
 levels(cut(sales$trans_face_val_amt, 5))
 ```
-
 
 ## Removing NA values
 
@@ -212,6 +223,7 @@ new.df[1,2] <- NA
 new.df[1,3] <- NA
 new.df
 ```
+
 ## Na.omit
 
 ```{r}
@@ -223,6 +235,7 @@ na.omit(new.df)
 ```{r}
 new.df[, colSums(is.na(new.df)) <= 1]
 ```
+
 ## Row NAs
 
 ```{r}
@@ -431,9 +444,13 @@ colnames(weather.readings)[19] <- "date"
 ```{r message=FALSE, warning=FALSE}
 require(reshape2)
 weather.metadata <- read.csv("data/weather.metadata.csv")
-weather.melted <- melt(weather.readings, id.vars="date")
-weather.joined <- merge(weather.melted, weather.metadata, 
-                        by.x="variable", by.y="id")
+weather.melted <- gather(weather.readings, key, 
+                         value, -date, -V3)
+
+weather.joined <- merge(weather.melted, 
+                        weather.metadata, 
+                        by.x="key", by.y="id")
+
 weather.joined$date <- unlist(weather.joined$date)
 weather.joined$day <- as_date(weather.joined$date)
 ```
@@ -441,7 +458,7 @@ weather.joined$day <- as_date(weather.joined$date)
 ## Done!
 
 ```{r}
-weather.joined[1:5,c(9,3,7,8)]
+weather.joined[1:5,c(10,4,8,9)]
 ```
 
 
