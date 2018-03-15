@@ -291,7 +291,7 @@ df %>%
   head() 
 ```
 
-*Row 1 indicates that trips decrease by 0.3 when precipitation is 7 times the average.
+*Row 1 indicates that trips decrease by 0.3 when precipitation is 7 times the average.*
 
 ## summarise()
 
@@ -353,18 +353,17 @@ df %>%
   top_n(4)
 ```
 
-*Sunny September*
+*Sunny September is when people ride the most bikes*
 
 ## group_by() + summarize()
 
-*What is the weather like in September?*
+*What is the average median Weather?*
 ```{r}
 df %>%
   group_by(month) %>%
-  filter(month == 9) %>%
   summarize(med_temp = median(tmax))
 ```
-*A beautiful 79 F (26 C)*
+*September has a beautiful 79 F (26 C)*
 
 ## group_by() + summarize()
 
