@@ -18,7 +18,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 
 knitr::opts_chunk$set(echo = TRUE, comment=NA, size='normalsize')
 
-sales <- read.csv("Workshops/sales.csv", na.strings=c("NULL", "NA"))
+sales <- read.csv("data/sales.csv", na.strings=c("NULL", "NA"))
 ```
 
 ## Common Tasks
@@ -106,6 +106,13 @@ new.df
 colnames(new.df[colnames(new.df) == "column.2"]) 
         <- "whatever"
 ```
+
+## Renaming data points
+
+```{r, eval=FALSE}
+PSI$variable[PSI$variable=="so2_twenty_four"] <- "so2_24"
+```
+
 
 ## Combining columns
 ```{r}
@@ -336,6 +343,19 @@ for (i in colnames(sales)) {
 results[60]
 ```
 
+## Better for loop
+
+```{r}
+results <- rep(NA, length(colnames(sales)))
+
+for (i in c(1:(length(colnames(sales))))) {
+  results[i] <- calc.na(colnames(sales)[i], sales)
+}
+
+results
+```
+
+
 ## Option 2: lapply
 
 ```{r}
@@ -354,6 +374,20 @@ subset_sentences <- function(Match, sentences){
 
 subsetted <- lapply(toMatch, subset_sentences, sentences)
 ```
+
+## [[]] operator
+
+```{r, eval=FALSE}
+adjust_conc <- function(data, col, amt, orig) {
+  update <- (data[[col]] * sd(orig$Concentration)) + 
+    mean(orig$Concentration)
+  update <- update * amt
+  update <- (update - mean(orig$Concentration))/
+    sd(orig$Concentration)
+return(update)
+}
+```
+
 
 ## Example
 
@@ -386,12 +420,12 @@ class(weather)
 
 ## Data
 
-![](nested_list.png)
+![](img/nested_list.png)
 
 ## Cleaning
 
 ```{r}
-weather <- unlist(rbind(weather[sapply(weather, 
+weather <- unlist(rbind(weather[lapply(weather, 
                   length)>0]), 
                   recursive=FALSE)
 ```
@@ -431,7 +465,7 @@ colnames(weather.readings)[19] <- "date"
 
 ## Finished
 
-![](cleaned.png)
+![](img/cleaned.png)
 
 ## Join metadata
 
