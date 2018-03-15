@@ -52,6 +52,8 @@ sales <- read.csv("data/sales.csv", na.strings=c("NULL", "NA"))
 * nrow(), length()
 * dataframe[row, column]
 
+## https://github.com/datadrivenyale/day-of-data-2.0
+
 ## Packages
 
 ```{r, eval=FALSE}
