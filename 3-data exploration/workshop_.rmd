@@ -15,24 +15,24 @@ output:
 #### Dplyr is an R package created by Hadley Wickham.  
 #### It makes data exploration easier:  
 
-- Adding SQL logic to R
-- Standardizing function input/output
-- Joining data
-- Grouping by variables
-- Transforming vectors
-- Summarizing vectors
+* Much less typing than base R
+* Standardizing function input/output
+* Joining data
+* Grouping by variables
+* Transforming vectors
+* Summarizing vectors
 
 ## Guiding Philosophy
 #### This workshop could also be known as:
 
-- teaching yourself to find cool stuff in your data
-- building data query intuition
-- learning how one question leads to another
+* teaching yourself to find cool stuff in your data
+* building data query intuition
+* learning how one question leads to another
 
 #### Dplyr empowers you to do this by:
-- having a conversation with our data,
-- exploring its form, and
-- uncover interesting relationships!
+* having a conversation with our data,
+* exploring its form, and
+* uncover interesting relationships!
 
 ## Clone the github repo
 
@@ -81,12 +81,12 @@ str(weather)
 
 #### Dplyr has joining functions for two data frames, x and y:
 
-- *left_join() - all rows from x, with all columns from x and y*
-- right_join() - all rows from y and all columns from x and y
-- inner_join() - all rows from x that match y, with all columns from x and y
-- full_join() - all rows from x and y with all columns
-- semi_join() - return all rows from x that match y, keeping only x columns
-- anti_join() - return rows from x that do not match y
+* *left_join() - all rows from x, with all columns from x and y*
+* right_join() - all rows from y and all columns from x and y
+* inner_join() - all rows from x that match y, with all columns from x and y
+* full_join() - all rows from x and y with all columns
+* semi_join() - return all rows from x that match y, keeping only x columns
+* anti_join() - return rows from x that do not match y
 
 #### Dplyr cheat sheet!
 https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
@@ -173,9 +173,9 @@ select(df, trips, hol)[1:5, ]
 ## Piping
 
 #### Pipes pass output from one function immediately to the next
-- dplyr functions take df as first argument
-- increases code readability
-- don't have to save intermediate objects or change original dataframe!
+* dplyr functions take df as first argument
+* increases code readability
+* don't have to save intermediate objects or change original dataframe!
 
 ## Piping
 
@@ -405,15 +405,15 @@ df %>%
 ## dplyr helper functions
 
 ### use these in pipes while you explore your data 
-- first() - first observation
-- last() - last observation
-- distinct() - exclude any duplicate rows
-- min rank() - rank each observation, ties get minimum value (typically used in sports)
-- dense_rank - rank each observation with no gaps 
-- percent_rank() - rank each observation between (0-1)
-- ntile() - create n number of qualities
-- lead() - shift column forward by one observation
-- lag() - shift column backward by one observation
+* first() - first observation
+* last() - last observation
+* distinct() - exclude any duplicate rows
+* min rank() - rank each observation, ties get minimum value (typically used in sports)
+* dense_rank - rank each observation with no gaps 
+* percent_rank() - rank each observation between (0-1)
+* ntile() - create n number of qualities
+* lead() - shift column forward by one observation
+* lag() - shift column backward by one observation
 
 # A few advanced examples
 
@@ -468,11 +468,11 @@ df %>%
 ## Conclusion
 
 #### In summary:
-- use combination of dplyr and pipes to create readable exploratory data analysis
-- keep your code and workspace clean
-- feed your pipes into ggplot2
-- explore your data by asking it questions
-- *keep asking questions!*
+* use combination of dplyr and pipes to create readable exploratory data analysis
+* keep your code and workspace clean
+* feed your pipes into ggplot2
+* explore your data by asking it questions
+* *keep asking questions!*
 
 #### Feel free to email me! 
 #### Greenisagoodcolor@gmail.com
