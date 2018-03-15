@@ -1,4 +1,4 @@
-Date,Mean Temp (C),Max Temp (C),Min Temp (C),Precipitation (in),Wind Speed (m/s)
+Date,Mean Temp (C),Max Temp (C),Min Temp (C),Precipitation (mm),Wind Speed (km/h)
 1/1/17,29,32,26,0,11
 1/2/17,28,31,26,0,4
 1/3/17,28,30,26,0,6
