@@ -361,9 +361,10 @@ df %>%
 ```{r}
 df %>%
   group_by(month) %>%
-  summarize(med_temp = median(tmax))
+  summarize(med_temp = median(tmax)) %>%
+  arrange(desc(med_temp))
 ```
-*September has a beautiful 79 F (26 C)*
+*July has a beautiful 85 F (29 C)*
 
 ## group_by() + summarize()
 

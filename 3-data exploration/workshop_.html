@@ -3585,25 +3585,26 @@ df %&gt;%
 
 <pre class = 'prettyprint lang-r'>df %&gt;%
   group_by(month) %&gt;%
-  summarize(med_temp = median(tmax))</pre>
+  summarize(med_temp = median(tmax)) %&gt;%
+  arrange(desc(med_temp))</pre>
 
 <pre >## # A tibble: 12 x 2
 ##    month med_temp
 ##    &lt;int&gt;    &lt;dbl&gt;
-##  1     1     39.0
-##  2     2     37.0
-##  3     3     49.0
-##  4     4     62.5
+##  1     7     85.0
+##  2     8     83.0
+##  3     6     81.0
+##  4     9     79.0
 ##  5     5     74.0
-##  6     6     81.0
-##  7     7     85.0
-##  8     8     83.0
-##  9     9     79.0
-## 10    10     66.0
-## 11    11     55.0
-## 12    12     48.0</pre>
+##  6    10     66.0
+##  7     4     62.5
+##  8    11     55.0
+##  9     3     49.0
+## 10    12     48.0
+## 11     1     39.0
+## 12     2     37.0</pre>
 
-<p><em>September has a beautiful 79 F (26 C)</em></p>
+<p><em>July has a beautiful 85 F (29 C)</em></p>
 
 </article></slide><slide class=""><hgroup><h2>group_by() + summarize()</h2></hgroup><article  id="group_by-summarize-2" class="smaller ">
 
