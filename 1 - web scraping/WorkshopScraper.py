@@ -35,11 +35,11 @@ with open("WeatherScrape4.csv", "w") as file:
         print(dateString)
 
         # parse HTML
-        meantemp = soup.find_all('tr')[2].find_all('td')[1].find_all(attrs={"class":"wx-value"})[0].text
-        maxtemp = soup.find_all('tr')[3].find_all('td')[1].find_all(attrs={"class":"wx-value"})[0].text
-        mintemp = soup.find_all('tr')[4].find_all('td')[1].find_all(attrs={"class":"wx-value"})[0].text
-        precip = soup.find_all('tr')[13].find_all('td')[1].find_all(attrs={"class":"wx-value"})[0].text
-        wind = soup.find_all('tr')[17].find_all('td')[1].find_all(attrs={"class":"wx-value"})[0].text
+        meantemp = soup.find_all('tr')[2].find_all('td')[1].find(attrs={"class":"wx-value"}).text
+        maxtemp = soup.find_all('tr')[3].find_all('td')[1].find(attrs={"class":"wx-value"}).text
+        mintemp = soup.find_all('tr')[4].find_all('td')[1].find(attrs={"class":"wx-value"}).text
+        precip = soup.find_all('tr')[13].find_all('td')[1].find(attrs={"class":"wx-value"}).text
+        wind = soup.find_all('tr')[17].find_all('td')[1].find(attrs={"class":"wx-value"}).text
 
         # write resutls
         csv_writer.writerow([dateString, meantemp, maxtemp, mintemp, precip, wind])
