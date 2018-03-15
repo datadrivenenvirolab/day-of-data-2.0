@@ -473,3 +473,8 @@ df %>%
 * feed your pipes into ggplot2
 * explore your data by asking it questions
 * *keep asking questions!*
+
+##  Questions?
+
+#### Feel free to email me :)
+#### matthew.moroney@yale.edu
