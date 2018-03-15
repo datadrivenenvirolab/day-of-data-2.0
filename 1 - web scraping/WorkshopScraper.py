@@ -25,7 +25,7 @@ soup = BeautifulSoup(content, "lxml")
 
 with open("WeatherScrape4.csv", "w") as file:
     csv_writer = csv.writer(file)
-    csv_writer.writerow(['Date', 'Mean Temp (C)', 'Max Temp (C)', 'Min Temp (C)', 'Precipitation (in)', 'Wind Speed (m/s)'])
+    csv_writer.writerow(['Date', 'Mean Temp (C)', 'Max Temp (C)', 'Min Temp (C)', 'Precipitation (mm)', 'Wind Speed (km/h)'])
 
     endDate = time.strptime(endDate, "%Y/%m/%d")
     date = time.strptime(startDate, "%Y/%m/%d")
