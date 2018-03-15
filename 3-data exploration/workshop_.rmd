@@ -13,9 +13,7 @@ output:
 ## Dplyr
 
 #### Dplyr is an R package created by Hadley Wickham.  
-\vspace{1.5cm}
 #### It makes data exploration easier:  
-\vspace{1.5cm}
 
 - Adding SQL logic to R
 - Standardizing function input/output
@@ -35,6 +33,10 @@ output:
 - having a conversation with our data,
 - exploring its form, and
 - uncover interesting relationships!
+
+## Clone the github repo
+
+### Everything available here: www.github.com/datadrivenyale/day-of-data-2.0
 
 ## Install & Load the R Package
 
