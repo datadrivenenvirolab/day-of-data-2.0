@@ -2,6 +2,8 @@
 Files for the DDY workshops
 
 1) Data Scraping (15/3, 6-7 pm)
+    + `WeatherScrape.csv` is the ouptut from `WorkshopScraper.py`
+    + Topics include: basic HTML overview, Document Object Model, HTTP requests with Requests library, parsing HTML with BeautifulSoup, storing scraped data, traversing pages, exception handling, and data cleaning
 
 2) Data Cleaning (15/3, 7-8 pm)
     + `data_cleaning.Rmd` contains the R code for the `data_cleaning.pdf`
