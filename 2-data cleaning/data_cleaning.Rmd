@@ -51,6 +51,25 @@ sales <- read.csv("Workshops/sales.csv", na.strings=c("NULL", "NA"))
 * nrow(), length()
 * dataframe[row, column]
 
+## Packages
+
+```{r, eval=FALSE}
+install.packages(c("lubridate",
+                   "dplyr", 
+                   "tidyr", 
+                   "reshape2", 
+                   "tibble"))
+```
+
+```{r message=FALSE, warning=FALSE}
+library(lubridate)
+library(dplyr)
+library(tidyr)
+library(reshape2)
+library(tibble)
+```
+
+
 ## Structure
 
 `as.Date`, `as.String`, `as.Numeric`, `as.Factor`

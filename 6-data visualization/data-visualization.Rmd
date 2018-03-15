@@ -1,12 +1,20 @@
 ---
 title: "ggplot2"
 author: "John Brandt"
-date: "3/15/2018"
+date: "3/16/2018"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Required packages
+
+```{r, eval=FALSE}
+install.packages(c("ggplot2", "dplyr"))
+library(dplyr)
+library(ggplot2)
 ```
 
 ## Read in the data
