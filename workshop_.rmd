@@ -1,0 +1,480 @@
+---
+title: "Exploratory Data Analysis: An R workshop with dplyr"
+subtitle: "Yale NUS Day of Data 2.0 Hackathon"
+author: "Matthew Moroney"
+date: "March 15, 2018"
+output: 
+  ioslides_presentation:
+    smaller: true
+---
+<style type="text/css"> body, td{line-height:2} </style>
+# Introduction
+
+## Dplyr
+
+#### Dplyr is an R package created by Hadley Wickham.  
+#### It makes data exploration easier:  
+
+- Adding SQL logic to R
+- Standardizing function input/output
+- Joining data
+- Grouping by variables
+- Transforming vectors
+- Summarizing vectors
+
+## Guiding Philosophy
+#### This workshop could also be known as:
+
+- teaching yourself to find cool stuff in your data
+- building data query intuition
+- learning how one question leads to another
+
+#### Dplyr empowers you to do this by:
+- having a conversation with our data,
+- exploring its form, and
+- uncover interesting relationships!
+
+## Clone the github repo
+
+### Everything available here: www.github.com/datadrivenyale/day-of-data-2.0
+
+## Install & Load the R Package
+
+#### Install dplyr...you only need to do this once
+```{r}
+#install.packages("dplyr") 
+```
+
+#### Now we load our dplyr package
+```{r, warning = F, error = F, message = F}
+library(dplyr)
+```
+
+# Dplyr Functions in Action!
+
+## Bike sharing in New York City
+
+#### Number of trips on Citibikes from July 2013 to March 2016
+
+```{r}
+bikes <- read.csv("~/Yale/ddy/dayofdata2/citibike_main.csv")
+```
+
+#### Weather data for the same period
+```{r}
+weather <- read.csv("~/Yale/ddy/dayofdata2/weather.csv", na.strings=c("NA", -9999))
+```
+
+## Glimpse()
+
+#### Glimpse() provides a succinct way to examine our dataframes
+
+```{r}
+glimpse(bikes)
+```
+
+```{r}
+str(weather)
+```
+
+## Joins
+
+#### Dplyr has joining functions for two data frames, x and y:
+
+- *left_join() - all rows from x, with all columns from x and y*
+- right_join() - all rows from y and all columns from x and y
+- inner_join() - all rows from x that match y, with all columns from x and y
+- full_join() - all rows from x and y with all columns
+- semi_join() - return all rows from x that match y, keeping only x columns
+- anti_join() - return rows from x that do not match y
+
+#### Dplyr cheat sheet!
+https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+
+## left_join()
+
+#### Let's add some weather variables to the bike share data.
+
+```{r, warning = FALSE}
+df <- left_join(bikes, weather)
+```
+
+```{r, echo = F}
+glimpse(df)
+```
+
+## Rename()
+
+#### Rename() easy way to rename columns
+
+```{r}
+df <- rename(df, n_sta = n_stations, hol = holiday, day = dayofweek, prcp = PRCP,
+             snwd = SNWD, snow = SNOW, tmax = TMAX, tmin = TMIN, wind = AWND)
+```
+
+Now all the column names are short and lower case.
+
+```{r}
+names(df)
+```
+
+## Arrange()
+
+#### Sorts a dataframe by a column from lowest to highest
+
+*When were the least bike trips taken?*
+
+```{r}
+arrange(df, trips)[1:3, ]
+```
+
+*The least trips occured on a day with lots of snow! (9.5 in = 0.24 m)*
+
+## Arrange()
+
+#### Sort a column from highest to lowest values with desc()
+
+*What were the heaviest rain days in NYC?*
+
+```{r}
+arrange(df, desc(prcp))[1:3, ]
+```
+
+*The heaviest rainfall was 5 inches (0.13 m) in a day!*
+
+## Filter()
+
+#### Exclude rows based on logical conditions
+
+*How many trips do people take on hotter days?*
+```{r}
+filter(df, tmax > 95)[1:3,]
+```
+
+*People take lots of trips when its hot! (35 C)*
+
+```{r}
+filter(df, tmax < 20)[1:3,]
+```
+
+*Compared with when it is cold! (-6.7 C)*
+
+## Select()
+
+#### Keep only the columns specified
+
+*Do holidays affect how many trips people take?*
+```{r}
+select(df, trips, hol)[1:5, ]
+```
+
+*This is hard to tell with only 5 rows...*
+
+## Piping
+
+#### Pipes pass output from one function immediately to the next
+- dplyr functions take df as first argument
+- increases code readability
+- don't have to save intermediate objects or change original dataframe!
+
+## Piping
+
+*How many trips were taken on the windiest days?*
+```{r}
+df %>%
+  select(date, trips, wind) %>%
+  arrange(desc(wind)) %>%
+  top_n(3)
+```
+
+## Piping
+
+#### Change position of piped object with "." 
+
+```{r}
+df %>%
+  select(date, trips, tmax) %>%
+  lm(trips ~ tmax, data = .) %>%
+  summary() 
+```
+
+## Select() - helper functions
+
+#### Contains() pulls columns matching a character string
+```{r, eval = F}
+select(df, contains("in")) %>%
+  names()
+```
+
+#### matches() pulls columns matching a regular expression
+```{r}
+select(df, matches(".n.")) %>%
+  names()
+```
+
+## Select() - helper functions
+
+Starts_with() and ends_with() using for pulling strings or making tags on your dataframe
+
+```{r}
+select(df, starts_with("t")) %>%
+  names()
+```
+
+```{r}
+select(df, ends_with("min")) %>%
+  names()
+```
+
+Select also allows you to exclude columns with a "-" sign
+
+```{r}
+select(df, -month, -date, -day, -snwd) %>%
+  head(2)
+```
+
+## mutate()
+
+#### Creates new vectors from old vectors.
+
+*Does the number of stations affect the number of trips?*
+```{r}
+df %>%
+  mutate(pct.max.trips = trips/max(trips),
+         pct.max.sta = n_sta/max(n_sta)) %>%
+  select(date, pct.max.trips, pct.max.sta) %>%
+  arrange(desc(pct.max.trips)) %>%
+  top_n(3)
+```
+
+## mutate + sample_n()
+
+#### Randomly sample a column
+
+*What is a bootstrapped confidence estimate of multiple of the mean trips in September?*
+
+```{r}
+set.seed(27)
+df %>%
+  mutate(pct.mean = trips/mean(trips)) %>%
+  filter(month == 9) %>%
+  select(pct.mean) %>%
+  sample_n(10000, replace = T) %>%
+  .$pct.mean %>%
+  quantile(probs = c(0.025, 0.975))
+```
+
+*These estimates can help policy makers plan capacity from expected number of trips demanded!*
+
+## transmute()
+
+#### Create new column and drop old ones
+
+*What is the distribution of daily multiples of the mean?*
+```{r}
+df %>%
+  transmute(times.avg = trips/mean(trips)) %>%
+  summary()
+```
+
+*The median is 1.06, potentially indicating an increasing number of trips over the length of the dataset*
+
+## mutate_all()
+
+#### Mutates each column at once
+
+*What is the daily multiple of the mean for each observation?*
+```{r}
+df %>%
+  select(-date,-hol,-day,-snwd, -snow) %>%
+  mutate_all(function(x) x/mean(x, na.rm=T)) %>%
+  head() 
+```
+
+*Row 1 indicates that trips decrease by 0.3 when precipitation is 7 times the average.*
+
+## summarise()
+
+#### Compresses a vector into a single value. 
+
+*What is the average snowfall?*
+```{r}
+df %>%
+  filter(snow > 0) %>%
+  summarise(avg.snow = mean(snow))
+```
+*When it snows, it snows on average 2.5 inches (6.4 cm)*
+
+## summarise_all()
+
+#### Compresses each column into a single value (similiar to sapply)
+
+*What is the median day in Spring 2015 look like?*
+
+```{r, echo = F}
+df$date <- lubridate::mdy(df$date)
+```
+
+```{r}
+df %>%
+  mutate(year = lubridate::year(date)) %>%
+  filter(month >= 3, month < 6, year == 2015)  %>%
+  select(-date,-day,-hol, -month, -year) %>%
+  summarise_all(median, na.rm=T)
+```
+
+*Most days were not snowing or raining, with a pleasant temperature range 46-63 F (7-17 C) with a light breeze of 5.4 mph (8.7 kph)*
+
+## group_by()
+
+#### Analyze separate factor levels simultaneously
+
+*How do holidays affect bike rentals?*
+
+```{r}
+df %>%
+  group_by(day, hol) %>%
+  summarize(avg_trips = mean(trips)) %>%
+  head(4)
+```
+
+*Less trips on holidays. Are people leaving town more?*
+
+## group_by() + summarize()
+#### Group_by really start to shines with summarize! 
+
+*What month has the most trips?*
+
+```{r}
+df %>%
+  group_by(month) %>%
+  summarize(avg = mean(trips)) %>%
+  arrange(desc(avg)) %>%
+  top_n(4)
+```
+
+*Sunny September*
+
+## group_by() + summarize()
+
+*What is the weather like in September?*
+```{r}
+df %>%
+  group_by(month) %>%
+  filter(month == 9) %>%
+  summarize(med_temp = median(tmax))
+```
+*A beautiful 79 F (26 C)*
+
+## group_by() + summarize()
+
+*What day has the most trips?*
+```{r}
+df %>%
+  group_by(day) %>%
+  summarize(avg = mean(trips)) %>%
+  arrange(desc(avg))
+```
+
+*Less trips on weekends. Why could this be?*
+
+## group_by() + summarize()
+
+Can also group by logical conditions for on the fly factor creation
+
+*What are trips like on rainy, hot days compared with dry and hot days, rainy and cold days, and dry and cold days?*
+
+```{r}
+df %>%
+  group_by(prcp > 1, tmax > 50) %>%
+  summarize(mean = mean(trips))
+```
+
+*Dry warm days have twice as many trips that rainy warm days. Cold rainy days have 10 times less trips than Dry warm days.*
+
+## group_by() + summarize() + helper functions
+
+n() counts how many observations are in each group
+```{r}
+df %>%
+  group_by(month) %>%
+  summarize(n = n()) %>%
+  head(4)
+```
+
+## dplyr helper functions
+
+### use these in pipes while you explore your data 
+- first() - first observation
+- last() - last observation
+- distinct() - exclude any duplicate rows
+- min rank() - rank each observation, ties get minimum value (typically used in sports)
+- dense_rank - rank each observation with no gaps 
+- percent_rank() - rank each observation between (0-1)
+- ntile() - create n number of qualities
+- lead() - shift column forward by one observation
+- lag() - shift column backward by one observation
+
+# A few advanced examples
+
+## Piping!
+
+*Do previous day temperatures affect total number of trips*
+
+```{r}
+df %>%
+  group_by(day) %>%
+  mutate(tmax.dif = tmax-lag(tmax)) %>%
+  select(date, trips, tmax.dif) %>%
+  na.omit() %>%
+  arrange(desc(trips)) %>%
+  ungroup() %>%
+  group_by(abs(tmax.dif) > 15) %>%
+  summarize(median(trips, na.rm = T))
+```
+
+##  Piping to ggplot2
+
+```{r, include = F}
+library(ggplot2)
+library(lubridate)
+df$year <- as.factor(year(df$date))
+```
+
+*Do the number of stations affect the number of trips?*
+
+```{r, warning = F, eval = FALSE}
+df %>%
+  ggplot(aes(n_sta, trips, group=year(date), fill = year)) +
+    geom_boxplot() +
+    facet_wrap(~month) +
+    ggtitle("Number of Citibike trips as a function of number of stations")
+```
+
+##  Piping to ggplot2
+
+```{r, warning = F, echo = FALSE}
+df %>%
+  ggplot(aes(n_sta, trips, group=year(date), fill = year)) +
+    geom_boxplot() +
+    facet_wrap(~month) +
+    ggtitle("Number of Citibike trips as a function of number of stations")
+```
+
+*Looks vaguely like it is increasing the most in March. Most stations were installed in August 2015*
+
+# Wrapping up
+
+## Conclusion
+
+#### In summary:
+- use combination of dplyr and pipes to create readable exploratory data analysis
+- keep your code and workspace clean
+- feed your pipes into ggplot2
+- explore your data by asking it questions
+- *keep asking questions!*
+
+#### Feel free to email me! 
+#### Greenisagoodcolor@gmail.com
+
+
