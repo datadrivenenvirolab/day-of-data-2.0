@@ -13,10 +13,14 @@
 <br><br>
 <br><br><br><br>
 <br><br><br><br><br><br><br><br>
+
 ---
+
 https://github.com/datadrivenyale/day-of-data-2.0
+
 ---
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 # Agenda
 
 ##### Introduction to Geospatial Analysis
