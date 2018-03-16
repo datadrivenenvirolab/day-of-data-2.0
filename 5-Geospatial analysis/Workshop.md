@@ -21,18 +21,16 @@ Collection, visualization, and analysis of geographical or spatial data.
 -Vector
 Data representing lat-long coordinates
 
-![Points](https://github.com/datadrivenyale/day-of-data-2.0/edit/master/5-Geospatial%20analysis/images/points-vector.png)
+![Points](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/points-vector.png "Points")
 
-![Lines](https://github.com/datadrivenyale/day-of-data-2.0/edit/master/5-Geospatial%20analysis/images/line-vector.png)
+![Lines](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/line-vector.png "Lines")
 
-![Polygons](https://github.com/datadrivenyale/day-of-data-2.0/edit/master/5-Geospatial%20analysis/images/polygon-vector.png)
-
-Reference-style: 
-![alt text][logo]
-
-[logo]: https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/Map-Algebra.png "Logo Title Text 2"
+![Polygons](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/polygon-vector.png "Polygons")
 
 -Raster
+
+![Raster](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/Map-Algebra.png "Raster")
+
 
 ## image.select
 - Creates a new image containing only those bands of a specified image that have a specified name, index, or RE2-compatible regex.
