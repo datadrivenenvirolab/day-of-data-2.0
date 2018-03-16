@@ -83,6 +83,7 @@ Collection, visualization, and analysis of geographical or spatial data.
 - greater than 4000 new images every day 
 - greater than 5 million images 
 - greater than 5 petabytes of data
+
 Source: Google Earth Engine User summit
 
 ---
