@@ -199,9 +199,8 @@ hclus_eval <- function(data_m, dist_m = 'euclidean', clus_m = 'ward', plot_op = 
   ylim_n <- max(output_list[[2]])
 
   if (plot_op == T){
-  plot(lines(output_list[[2]], col = 'blue', lwd=3, ylim = c(0, ylim_n))
-  legend('topright', c('RMSSTD'), lty = c(1),
-  col = c('red'))
+  plot(lines(output_list[[2]], col = 'blue', lwd=3, ylim = c(0, ylim_n)))
+  legend('topright', c('RMSSTD'), lty = c(1), col = c('red'))
   }
 
   return(output_list)  
