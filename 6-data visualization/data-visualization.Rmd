@@ -21,27 +21,7 @@ library(ggplot2)
 
 ```{r message=FALSE, warning=FALSE}
 require(ggplot2)
-employment <- read.csv("data/recent-grads.csv")
-employment <- na.omit(employment)
-employment <- employment[-which(employment$Median > 100000),]
-employment$science.other <- "Science"
-employment$science.other[employment$Major_category %in%
-                           c("Arts",
-                             "Business",
-                             "Communications & Journalism",
-                             "Education",
-                             "Humanities & Liberal Arts",
-                             "Industrial Arts & Consumer Services",
-                             "Interdisciplinary",
-                             "Law & Public Policy",
-                             "Psychology & Social Work",
-                             "Social Science")] <- "Humanities"
-
-#which(employment$Major=="ACTUARIAL SCIENCE")
-
-employment$science.other[6] <- "Science"
-
-write.csv(employment, "employment.csv")
+employment <- read.csv("data/employment.csv")
 ```
 
 ## Employment data - Begin

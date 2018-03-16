@@ -134,27 +134,7 @@ library(ggplot2)</code></pre>
 <div id="read-in-the-data" class="section level2">
 <h2>Read in the data</h2>
 <pre class="r"><code>require(ggplot2)
-employment &lt;- read.csv(&quot;data/recent-grads.csv&quot;)
-employment &lt;- na.omit(employment)
-employment &lt;- employment[-which(employment$Median &gt; 100000),]
-employment$science.other &lt;- &quot;Science&quot;
-employment$science.other[employment$Major_category %in%
-                           c(&quot;Arts&quot;,
-                             &quot;Business&quot;,
-                             &quot;Communications &amp; Journalism&quot;,
-                             &quot;Education&quot;,
-                             &quot;Humanities &amp; Liberal Arts&quot;,
-                             &quot;Industrial Arts &amp; Consumer Services&quot;,
-                             &quot;Interdisciplinary&quot;,
-                             &quot;Law &amp; Public Policy&quot;,
-                             &quot;Psychology &amp; Social Work&quot;,
-                             &quot;Social Science&quot;)] &lt;- &quot;Humanities&quot;
-
-#which(employment$Major==&quot;ACTUARIAL SCIENCE&quot;)
-
-employment$science.other[6] &lt;- &quot;Science&quot;
-
-write.csv(employment, &quot;employment.csv&quot;)</code></pre>
+employment &lt;- read.csv(&quot;data/employment.csv&quot;)</code></pre>
 </div>
 <div id="employment-data---begin" class="section level2">
 <h2>Employment data - Begin</h2>
@@ -265,13 +245,13 @@ bottom &lt;- bottom[0:10,]
 topbottom &lt;- rbind(top, bottom)
 
 head(topbottom[,c(3,16)])</code></pre>
-<pre><code>##                    Major Median
-## 1   CHEMICAL ENGINEERING  65000
-## 2      ACTUARIAL SCIENCE  62000
-## 3 MECHANICAL ENGINEERING  60000
-## 4 ELECTRICAL ENGINEERING  60000
-## 5   COMPUTER ENGINEERING  60000
-## 6  AEROSPACE ENGINEERING  60000</code></pre>
+<pre><code>##   Major_code Unemployment_rate
+## 1       2405        0.06109771
+## 2       6202        0.09565217
+## 3       2414        0.05734228
+## 4       2408        0.05917385
+## 5       2407        0.06540928
+## 6       2401        0.06516208</code></pre>
 </div>
 <div id="plot-2---simple-plot-coord_flip-themes-labels" class="section level2">
 <h2>Plot 2 - Simple plot + coord_flip + themes + labels</h2>
