@@ -90,15 +90,75 @@ Map.setCenter(long, lat, zoom level);
 ```javascript
 print(variable name) 
 ```
-
-##### Javascript
+- Adding a layer to the map
 ```javascript
-var RedBandIMAGE   = ee.Image( 'LC8_L1T_TOA/LC80410362015107LGN00' ).select( ['B4'] );   // Los Angeles
-var GreenBandIMAGE = ee.Image( 'LC8_L1T_TOA/LC80410362015107LGN00' ).select( ['B3'] );
-var BlueBandIMAGE  = ee.Image( 'LC8_L1T_TOA/LC80410362015107LGN00' ).select( ['B2'] );
-var MultibandIMAGE = ee.Image( 'LC8_L1T_TOA/LC80410362015107LGN00' ).select( ['B4','B3','B2'] );
-Map.setCenter( -118.2733, 34.0942, 12 ); 
-Map.addLayer( RedBandIMAGE,   {min:0, max:0.17, palette:'000000,ff5555'},     'RednessImage'   );
-Map.addLayer( GreenBandIMAGE, {min:0, max:0.17, palette:'000000,77ff77'},     'Greenness Image');
-Map.addLayer( BlueBandIMAGE,  {min:0, max:0.17, palette:'000000,7777ff'},     'Blueness Image' );
-Map.addLayer( MultibandIMAGE, {min:0, max:0.17, gamma:0.5, bands:'B4,B3,B2'}, 'Multiband Image');
+Map.addLayer(VARIABLENAME);
+```
+
+# Variable types in Earth Engine
+
+- Strings  
+
+```javascript
+var var_String = ee.String("This is a string. Or is it? It is."); 
+```
+- Numbers
+```javascript
+var var_Numbers = ee.Number(5);
+```
+
+- Arrays
+```javascript
+var var_Array = ee.Array([[5, 2, 3],  [-2, 7, 10],  [6, 6, 9]]); 
+```
+
+- Lists
+```javascript
+var var_List = ee.List([5, "five" , 6, "six"]); 
+```
+- Dictionaries
+```javascript
+var var_Dictionary = ee.Dictionary({five: 5 , six: 6}); 
+```
+
+### And the fun stuff
+- Geometries
+- Features
+- Feature Collections
+- Images
+- Image Collections
+
+
+# Geometries – declaration and types
+
+-Points
+```javascript
+var var_Point = ee.Geometry.Point(0, 45);
+-Multi Points
+```javascript
+var var_MultiPoint = ee.Geometry.MultiPoint(0, 45, 5,6, 70,-56);
+```
+-Line String
+```javascript
+var var_LineString = ee.Geometry.LineString([[0, 45], [5,6], [70,-56]]);
+```
+-Multi Line String
+```javascript
+var var_MultiLineString = ee.Geometry.MultiLineString([[[0, 45], [5,6], [70,-56]], [[0, -45], [-5,-6], [-70,56]]]);
+```
+-Linear Ring
+```javascript
+var var_LinearRing = ee.Geometry.LinearRing(0, 45, 5,6, 70,-56, 0,45);
+```
+-Rectangle
+```javascript
+var var_Rectangle = ee.Geometry.Rectangle(0, 0, 60,30);
+```
+-Polygon
+```javascript
+var var_Polygon = ee.Geometry.Polygon([[[0, 0], [6,3], [5, 5], [-30,2], [0,0]]]);
+```
+-Multi Polygon
+```javascript
+var var_MultiPolygon = ee.Geometry.MultiPolygon([ee.Geometry.Polygon([[0, 0], [6, 3], [5, 5], [-30, 2], [0,0]]), ee.Geometry.Polygon([[0, 0], [-6, -3], [-5, -5], [30, -2], [0, 0]])]);
+```
