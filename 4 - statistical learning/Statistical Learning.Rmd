@@ -14,6 +14,7 @@ library(dplyr)
 library(ggplot2)
 library(reshape2)
 library(ggmap)
+library(ggfortify)
 
 #Retrieving data from repository
 Saopaulo <-read.csv("https://raw.githubusercontent.com/datadrivenyale/day-of-data-2.0/master/4%20-%20statistical%20learning/MSaopaulo.csv", header = TRUE, row.names = 1)
