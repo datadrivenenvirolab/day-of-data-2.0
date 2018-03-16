@@ -253,9 +253,62 @@ var values = var_Feature.get(''Size'');
 
 # Filters
 
-- Basic filters
+- Creator a filter for values of a property 
 
 ```javascript
 BFilter = ee.Filter.eq(Property_name, Value ) 
 ```
->or .neq ,  .gt ,    .gte ,     .lt ,    and   .lte
+>or .neq , .gt , .gte , .lt , and .lte
+
+- Create a filter based on maximum difference from a threshold
+
+```javascript
+DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value) 
+```
+
+- Create a text filter
+
+```javascript
+TxtFilter = ee.Filter.stringContains( Property_name, StringValue )    
+```
+
+>or .stringStartsWith, and .stringEndsWith
+
+- Create a range filter
+
+```javascript
+	RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
+```
+  
+- Create a list filter to check for certain values
+
+```javascript
+ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2) 
+```
+>.inList to test against list of values
+
+- Create a filter of dates
+
+```javascript
+DateFilter = ee.Filter.calendarRange(StartDate, StopDate);
+```
+
+- Create a filter for particular days of the year
+
+```javascript
+DayFilter = ee.Filter.dayOfYear(startDay, StopDay);
+```
+
+- Create a filter to subset geospatial data
+
+```javascript
+BoundsFilter= ee.Filter.bounds(GeometryorFeature);
+```
+-Combining and inversing filters
+
+```javascript
+NewFilter=ee.Filter.and(Listoffilters)
+NewFilter=ee.Filter.or(Listoffilters)
+inverseFilter = ee.Filter.not(filter)
+```
+
