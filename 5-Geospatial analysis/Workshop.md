@@ -433,5 +433,7 @@ Export.image.toDrive({
 
 ### Resources
 [Google Earth Engine API documentation] (https://developers.google.com/earth-engine/)
+
 [Google Earth Engine Developers forum] (https://groups.google.com/forum/#!forum/google-earth-engine-developers)
+
 [Example scripts from Prof. Dana Tomlin's handouts for his course on Geospatial Software Design.] (https://github.com/EEYale/example-scripts)
