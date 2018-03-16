@@ -13,6 +13,8 @@
 <br><br>
 <br><br><br><br>
 
+---
+
 
 # Agenda
 
@@ -29,9 +31,10 @@
 ##### Filters
 ##### Operations on Images
 ##### Operations on Image Collections
-##### Exporting Data
+##### Importing and exporting Data
 ##### Conclusion and resources
 
+---
 
 # Introduction
 Collection, visualization, and analysis of geographical or spatial data.
@@ -41,6 +44,9 @@ Collection, visualization, and analysis of geographical or spatial data.
 - Vector data represent lat-long coordinates
 
 - Raster data comprises of pixels with associated values
+
+---
+
 
 - Points
 
@@ -59,6 +65,8 @@ Collection, visualization, and analysis of geographical or spatial data.
 ![Raster](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/Map-Algebra.png "Raster")
 
 
+---
+
 # Google Earth Engine platform
 
 [Code Editor](https://code.earthengine.google.com/ "Earth Engine Code Editor")
@@ -72,8 +80,11 @@ Collection, visualization, and analysis of geographical or spatial data.
 - greater than 5 petabytes of data
 Source: Google Earth Engine User summit
 
+---
 
 ![Code Editor](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/EE.png "Code Editor")
+
+---
 
 # Basic Functions
 
@@ -95,6 +106,8 @@ print(variable name)
 ```javascript
 Map.addLayer(VARIABLENAME);
 ```
+
+---
 
 # Variable types in Earth Engine
 
@@ -129,6 +142,7 @@ var var_Dictionary = ee.Dictionary({five: 5 , six: 6});
 - Images
 - Image Collections
 
+---
 
 # Geometries – declaration and types
 
@@ -164,6 +178,9 @@ var var_Polygon = ee.Geometry.Polygon([[[0, 0], [6,3], [5, 5], [-30,2], [0,0]]])
 ```javascript
 var var_MultiPolygon = ee.Geometry.MultiPolygon([ee.Geometry.Polygon([[0, 0], [6, 3], [5, 5], [-30, 2], [0,0]]), ee.Geometry.Polygon([[0, 0], [-6, -3], [-5, -5], [30, -2], [0, 0]])]);
 ```
+
+---
+
 # Features and Feature Collections
 
 - Features are geometries associated with specific properties
@@ -171,6 +188,8 @@ var var_MultiPolygon = ee.Geometry.MultiPolygon([ee.Geometry.Polygon([[0, 0], [6
 
 
 ![Singapore map by GRC](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/GRC.png "Singapore Map by GRC")
+
+---
 
 # Functions and mapping
 
@@ -187,6 +206,9 @@ var result = function_Name(Input);
 ```javascript
 var result = Input.map(function_Name);
 ```
+
+---
+
 
 # Operations on Geometries
 
@@ -233,7 +255,7 @@ var Inter_geometry = var_Geometry1.intersection(var_Geometry2);
 ```javascript
 var Union_geometry = var_Geometry1.union(var_Geometry2);
 ```
-
+---
 # Operations on Features
 
 [Feature operations](https://code.earthengine.google.com/1cd4cb760f71a56dce1cabcf44feec27 "EE Feature operations")
@@ -250,27 +272,27 @@ var var_Featurenew = var_Feature.select(["Name"], ["Descriptor"]);
 ```javascript
 var values = var_Feature.get(''Size'');
 ```
-
+---
 
 # Filters
 
 ### Creator a filter for values of a property 
 
 ```javascript
-BFilter = ee.Filter.eq(Property_name, Value ) 
+var BFilter = ee.Filter.eq(Property_name, Value ) 
 ```
 >or .neq , .gt , .gte , .lt , and .lte
 
 ### Create a filter based on maximum difference from a threshold
 
 ```javascript
-DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value) 
+var DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value) 
 ```
 
 ### Create a text filter
 
 ```javascript
-TxtFilter = ee.Filter.stringContains( Property_name, StringValue )    
+var TxtFilter = ee.Filter.stringContains( Property_name, StringValue )    
 ```
 
 >or .stringStartsWith, and .stringEndsWith
@@ -278,42 +300,44 @@ TxtFilter = ee.Filter.stringContains( Property_name, StringValue )
 ### Create a range filter
 
 ```javascript
-RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
+var RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
 ```
   
 ### Create a list filter to check for certain values
 
 ```javascript
-ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2) 
+var ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2) 
 ```
 >.inList to test against list of values
 
 ### Create a filter of dates
 
 ```javascript
-DateFilter = ee.Filter.calendarRange(StartDate, StopDate);
+var DateFilter = ee.Filter.calendarRange(StartDate, StopDate);
 ```
 
 ### Create a filter for particular days of the year
 
 ```javascript
-DayFilter = ee.Filter.dayOfYear(startDay, StopDay);
+var DayFilter = ee.Filter.dayOfYear(startDay, StopDay);
 ```
 
 ### Create a filter to subset geospatial data
 
 ```javascript
-BoundsFilter= ee.Filter.bounds(GeometryorFeature);
+var BoundsFilter= ee.Filter.bounds(GeometryorFeature);
 ```
 ### Combining and inversing filters
 
 ```javascript
-NewFilter=ee.Filter.and(Listoffilters)
-NewFilter=ee.Filter.or(Listoffilters)
-inverseFilter = ee.Filter.not(filter)
+var NewFilter=ee.Filter.and(Listoffilters)
+var NewFilter=ee.Filter.or(Listoffilters)
+var inverseFilter = ee.Filter.not(filter)
 ```
-
+---
 # Operations on Images
+
+[Image operations](https://code.earthengine.google.com/54c72f1d74cb42e7ed1245f1511562bb "EE Image operations")
 
 ### Selecting the bands of an image 
 ```javascript
@@ -321,8 +345,9 @@ var band = var_Image.select(band name);
 ```
 ### Creating masks
 ```javascript
-var mask =var_Image.eq(value) or .neq or .gt or .gte or .lt or .lte
+var mask =var_Image.eq(value) 
 ```
+>or .neq or .gt or .gte or .lt or .lte
 ### Applying masks
 ```javascript
 var masked =var_Image.mask(mask)
@@ -330,6 +355,29 @@ var masked =var_Image.mask(mask)
 
 ### Pixelwise calculation
 ```javascript
-var results =var_Image.sum(value) or .subtract ,    .multiply ,    .divide ,    .max , .min ,  .abs ,  .round ,  .floor ,  .ceil ,  .sqrt ,  .exp,  .log, .log10, .sin ,  .cos ,  .tan ,  .sinh ,  .cosh ,  .tanh ,  .acos, .asin 
+var results =var_Image.sum(value) 
+```
+>or .subtract ,    .multiply ,    .divide ,    .max , .min ,  .abs ,  .round ,  .floor ,  .ceil ,  .sqrt ,  .exp,  .log, .log10, .sin ,  .cos ,  .tan ,  .sinh ,  .cosh ,  .tanh ,  .acos, .asin 
+
+### Shift pixels of an image
+```javascript
+newImage = oldImage.leftShift(valueofshift)                       
+```
+>or .rightShift
+
+### Create a single value from an image by applying a reducer based on regions of interest
+
+```javascript
+var outputDictionary = var_Image.reduceRegion(Reducer, var_Geometry, scale);
+```
+
+---
+
+# Operations on Image COllections
+
+### Select the first n numbers of images in a collection (based on property)
+
+```javascript
+SelectedImages =var_ImCollection.limit (n, Property_name, Order )
 ```
 
