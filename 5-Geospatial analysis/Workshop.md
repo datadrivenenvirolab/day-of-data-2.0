@@ -29,7 +29,7 @@
 - Images and Image Collections
 - Filters
 - Exporting Data
-- Example Scripts
+- Conclusion and resources
 
 
 # Introduction
@@ -58,28 +58,23 @@ Collection, visualization, and analysis of geographical or spatial data.
 ![Raster](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/Map-Algebra.png "Raster")
 
 
-#Google Earth Engin platform
+# Google Earth Engine platform
 
-- [Link](https://code.earthengine.google.com/ "Earth Engine Code Editor")
+- [Code Editor](https://code.earthengine.google.com/ "Earth Engine Code Editor")
 
-## image.select
-- Creates a new image containing only those bands of a specified image that have a specified name, index, or RE2-compatible regex.
-- Since selections cannot be made from an image collection, such a collection would have to be reduced to an image in order to select bands.
-
-### Syntax
-
-##### Javascript
-```
-newImage = oldImage.select( bandSelectors, bandOrder )  
-```
-
-- *newImage* is the new image.
-- *oldImage* is the specified image.
-- *bandSelectors* are the specified names, indices, or regexes, given as an array of strings.
-- Optional: *bandOrder* is an array of new names to be ascribed to (all of) the bands of the new image, given as an array of strings.
+- Cloud-based platform for planetary scale geospatial analysis
+- Uses Google's computational resources to reduce processing time
+- Massive archive of remote sensing data 
+- 200 public datasets 
+- > 4000 new images every day 
+- > 5 million images 
+- > 5 petabytes of data
+Source: Google Earth Engine User summit
 
 
-### Example
+![Code Editor](https://github.com/datadrivenyale/day-of-data-2.0/tree/master/5-Geospatial%20analysis/images "Code Editor")
+
+
 
 ##### Javascript
 ```javascript
