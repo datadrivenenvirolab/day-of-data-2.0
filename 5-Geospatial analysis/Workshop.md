@@ -16,7 +16,7 @@
 
 # Agenda
 
-- Introduction to Geospatial Analysis
+###### Introduction to Geospatial Analysis
 - Data Types
 - The Google Earth Engine platform
 - Basic functions
