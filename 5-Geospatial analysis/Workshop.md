@@ -74,6 +74,21 @@ Source: Google Earth Engine User summit
 
 ![Code Editor](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/EE.png "Code Editor")
 
+# Basic Functions
+
+- Declaring variables 
+```javascript
+var varname = Containerforvariabletype(variable name); 
+
+- Centering map
+```javascript
+Map.setCenter(long, lat, zoom level);
+
+>Zoom level varies from 0 (no zoom) to 20 (highest zoom level)
+
+- Displaying metadata
+```javascript
+print(variable name) 
 
 
 ##### Javascript
