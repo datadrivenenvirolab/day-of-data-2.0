@@ -14,7 +14,8 @@
 <br><br><br><br>
 
 ---
-
+https://github.com/datadrivenyale/day-of-data-2.0
+---
 
 # Agenda
 
