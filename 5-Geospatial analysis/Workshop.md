@@ -42,19 +42,19 @@ Collection, visualization, and analysis of geographical or spatial data.
 
 - Raster data comprises of pixels with associated values
 
--Points
+- Points
 
 ![Points](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/points-vector.png "Points")
 
--Lines
+- Lines
 
 ![Lines](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/line-vector.png "Lines")
 
--Polygons
+- Polygons
 
 ![Polygons](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/polygon-vector.png "Polygons")
 
--Raster layers/bands
+- Raster layers/bands
 
 ![Raster](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/Map-Algebra.png "Raster")
 
@@ -77,7 +77,7 @@ Source: Google Earth Engine User summit
 
 # Basic Functions
 
-- Declaring variables 
+#####  Declaring variables 
 ```javascript
 var varname = Containerforvariabletype(variable name); 
 ```
