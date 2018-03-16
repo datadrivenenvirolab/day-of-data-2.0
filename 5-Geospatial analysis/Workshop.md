@@ -37,19 +37,30 @@ Collection, visualization, and analysis of geographical or spatial data.
 
 # Data types
 
-- Vector
-Data representing lat-long coordinates
+- Vector data represent lat-long coordinates
+
+- Raster data comprises of pixels with associated values
+
+-Points
 
 ![Points](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/points-vector.png "Points")
 
+-Lines
+
 ![Lines](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/line-vector.png "Lines")
+
+-Polygons
 
 ![Polygons](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/polygon-vector.png "Polygons")
 
-- Raster
+-Raster layers/bands
 
 ![Raster](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/Map-Algebra.png "Raster")
 
+
+#Google Earth Engin platform
+
+- [Link](https://code.earthengine.google.com/ "Earth Engine Code Editor")
 
 ## image.select
 - Creates a new image containing only those bands of a specified image that have a specified name, index, or RE2-compatible regex.
