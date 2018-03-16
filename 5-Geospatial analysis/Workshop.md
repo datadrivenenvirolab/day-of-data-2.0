@@ -16,10 +16,10 @@
 
 ---
 
-https://github.com/datadrivenyale/day-of-data-2.0
+<p align="center"> https://github.com/datadrivenyale/day-of-data-2.0 </p>
 
 ---
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 
 # Agenda
 
