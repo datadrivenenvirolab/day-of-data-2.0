@@ -378,7 +378,7 @@ var outputDictionary = var_Image.reduceRegion(Reducer, var_Geometry, scale);
 
 ---
 
-# Operations on Image COllections
+# Operations on Image Collections
 
 ### Select the first n numbers of images in a collection (based on property)
 
