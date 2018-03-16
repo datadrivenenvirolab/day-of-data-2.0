@@ -66,13 +66,13 @@ Collection, visualization, and analysis of geographical or spatial data.
 - Uses Google's computational resources to reduce processing time
 - Massive archive of remote sensing data 
 - 200 public datasets 
-- > 4000 new images every day 
-- > 5 million images 
-- > 5 petabytes of data
+- greater than 4000 new images every day 
+- greater than 5 million images 
+- greater than 5 petabytes of data
 Source: Google Earth Engine User summit
 
 
-![Code Editor](https://github.com/datadrivenyale/day-of-data-2.0/tree/master/5-Geospatial%20analysis/images "Code Editor")
+![Code Editor](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/EE.png "Code Editor")
 
 
 
