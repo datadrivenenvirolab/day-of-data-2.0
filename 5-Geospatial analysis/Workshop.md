@@ -407,5 +407,14 @@ var sumofimages = var_ImCollection.sum();
 ### Create composite of images in collection with the last image on top
 
 ```javascript
-var sumofimages = var_ImCollection.sum();       
+var mosaicofimages = var_ImCollection.mosaic();       
 ```
+
+# Importing and exporting data
+
+[Image to table example](https://code.earthengine.google.com/7ba00e4d20acfdb3973bb0263757ecd7 "Image to table example")
+
+[Timelapse example](https://code.earthengine.google.com/3f9c9d57c08ac12f60d0f9f213a0d359 "Timelapse example")
+### Export image or table to Google Drive, Asset, or Googlr Cloud
+
+```javascript
