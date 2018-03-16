@@ -60,7 +60,7 @@ Collection, visualization, and analysis of geographical or spatial data.
 
 # Google Earth Engine platform
 
-- [Code Editor](https://code.earthengine.google.com/ "Earth Engine Code Editor")
+[Code Editor](https://code.earthengine.google.com/ "Earth Engine Code Editor")
 
 - Cloud-based platform for planetary scale geospatial analysis
 - Uses Google's computational resources to reduce processing time
@@ -189,7 +189,7 @@ var result = Input.map(function_Name);
 
 # Operations on Geometries
 
-![Geometry operations](https://code.earthengine.google.com/d5d2db5aa4bea6bd94355a39e1f42a3f "EE Geometry operations")
+[Geometry operations](https://code.earthengine.google.com/d5d2db5aa4bea6bd94355a39e1f42a3f "EE Geometry operations")
 
 - Find area of geometry
 ```javascript
@@ -235,7 +235,7 @@ var Union_geometry = var_Geometry1.union(var_Geometry2);
 
 # Operations on Features
 
-![Feature operations](https://code.earthengine.google.com/1cd4cb760f71a56dce1cabcf44feec27 "EE Feature operations")
+[Feature operations](https://code.earthengine.google.com/1cd4cb760f71a56dce1cabcf44feec27 "EE Feature operations")
 
 - Set property name and value of geometry to create a feature
 ```javascript
