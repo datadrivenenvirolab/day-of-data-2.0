@@ -253,4 +253,9 @@ var values = var_Feature.get(''Size'');
 
 # Filters
 
+- Basic filters
 
+```javascript
+BFilter = ee.Filter.eq(Property_name, Value ) 
+```
+>or .neq ,  .gt ,    .gte ,     .lt ,    and   .lte
