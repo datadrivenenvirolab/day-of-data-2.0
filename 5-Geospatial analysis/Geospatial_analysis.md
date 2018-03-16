@@ -5,6 +5,9 @@
 
 <p align="center"> <b>TC Chakraborty</b>   </p>
 
+<p align="center"> <b>Yale School of Forestry & Environmental Studies</b>   </p>
+
+<p align="center"> <b>Yale Data Driven Solutions Group</b>   </p>
 
 <br><br><br><br>
 
@@ -12,9 +15,14 @@
 <p align="center">  <b>March 16, 2018</b>  </p>
 <br><br>
 <br><br><br><br>
+<br><br><br><br><br><br><br><br>
 
 ---
 
+<p align="center"> https://github.com/datadrivenyale/day-of-data-2.0 </p>
+
+---
+<br><br><br><br><br><br><br>
 
 # Agenda
 
@@ -78,6 +86,7 @@ Collection, visualization, and analysis of geographical or spatial data.
 - greater than 4000 new images every day 
 - greater than 5 million images 
 - greater than 5 petabytes of data
+
 Source: Google Earth Engine User summit
 
 ---
@@ -279,20 +288,20 @@ var values = var_Feature.get(''Size'');
 ### Creator a filter for values of a property 
 
 ```javascript
-var BFilter = ee.Filter.eq(Property_name, Value ) 
+var BFilter = ee.Filter.eq(Property_name, Value);
 ```
 >or .neq , .gt , .gte , .lt , and .lte
 
 ### Create a filter based on maximum difference from a threshold
 
 ```javascript
-var DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value) 
+var DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value);
 ```
 
 ### Create a text filter
 
 ```javascript
-var TxtFilter = ee.Filter.stringContains( Property_name, StringValue )    
+var TxtFilter = ee.Filter.stringContains( Property_name, StringValue);  
 ```
 
 >or .stringStartsWith, and .stringEndsWith
@@ -300,13 +309,13 @@ var TxtFilter = ee.Filter.stringContains( Property_name, StringValue )
 ### Create a range filter
 
 ```javascript
-var RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
+var RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue);
 ```
   
 ### Create a list filter to check for certain values
 
 ```javascript
-var ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2) 
+var ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2); 
 ```
 >.inList to test against list of values
 
@@ -330,9 +339,9 @@ var BoundsFilter= ee.Filter.bounds(GeometryorFeature);
 ### Combining and inversing filters
 
 ```javascript
-var NewFilter=ee.Filter.and(Listoffilters)
-var NewFilter=ee.Filter.or(Listoffilters)
-var inverseFilter = ee.Filter.not(filter)
+var NewFilter=ee.Filter.and(Listoffilters);
+var NewFilter=ee.Filter.or(Listoffilters);
+var inverseFilter = ee.Filter.not(filter);
 ```
 ---
 # Operations on Images
@@ -345,23 +354,23 @@ var band = var_Image.select(band name);
 ```
 ### Creating masks
 ```javascript
-var mask =var_Image.eq(value) 
+var mask =var_Image.eq(value); 
 ```
 >or .neq or .gt or .gte or .lt or .lte
 ### Applying masks
 ```javascript
-var masked =var_Image.mask(mask)
+var masked =var_Image.mask(mask);
 ```
 
 ### Pixelwise calculation
 ```javascript
-var results =var_Image.sum(value) 
+var results =var_Image.sum(value); 
 ```
 >or .subtract ,    .multiply ,    .divide ,    .max , .min ,  .abs ,  .round ,  .floor ,  .ceil ,  .sqrt ,  .exp,  .log, .log10, .sin ,  .cos ,  .tan ,  .sinh ,  .cosh ,  .tanh ,  .acos, .asin 
 
 ### Shift pixels of an image
 ```javascript
-newImage = oldImage.leftShift(valueofshift)                       
+newImage = oldImage.leftShift(valueofshift);                       
 ```
 >or .rightShift
 
@@ -373,11 +382,69 @@ var outputDictionary = var_Image.reduceRegion(Reducer, var_Geometry, scale);
 
 ---
 
-# Operations on Image COllections
+# Operations on Image Collections
 
 ### Select the first n numbers of images in a collection (based on property)
 
 ```javascript
-SelectedImages =var_ImCollection.limit (n, Property_name, Order )
+var SelectedImages =var_ImCollection.limit (n, Property_name, Order);
 ```
 
+### Select images in collection based on particular properties
+
+```javascript
+var SelectedImages = var_ImCollection.filterMetadata (Property_name, Relation , Value);
+```
+>Relations could be "equals", "less_than", "greater_than", "starts_with", "ends_with", and "contains"
+
+### Select images within date range
+```javascript
+var SelectedImages = var_ImCollection.filterDate (StartDate, StopDate);
+```
+
+### Select images within Geometry
+```javascript
+var SelectedImages = var_ImCollection.filterBounds (var_Geometry);
+```
+
+### Perform pixelwise calculations for all images in collection
+```javascript
+var sumofimages = var_ImCollection.sum();       
+```
+>or .product, .max, .min, .mean, .mode, .median, and .count     
+
+### Create composite of images in collection with the last image on top
+
+```javascript
+var mosaicofimages = var_ImCollection.mosaic();       
+```
+---
+# Importing and exporting data
+
+[Image to table example](https://code.earthengine.google.com/7ba00e4d20acfdb3973bb0263757ecd7 "Image to table example")
+
+[Timelapse example](https://code.earthengine.google.com/3f9c9d57c08ac12f60d0f9f213a0d359 "Timelapse example")
+### Export image, video or table to Google Drive, Asset, or Google Cloud
+
+```javascript
+Export.image.toDrive({
+  collection: var_Image, description: 'FileName', region: var_Geometry, scale: 1000}
+});
+```
+>or image.toCloudStorage, image.toAsset, table.toDrive, table.toCloudStorage, video.toCloudStorage, and video.toDrive
+
+---
+
+# Conclusion and resource
+
+[Night Lights example](https://code.earthengine.google.com/2859884e8ea9b116c2ae24c3f95ec8cb "Night Lights example") 
+- Adapted from Prof. Dana Tomlin's notes
+
+### Resources
+[Google Earth Engine API documentation](https://developers.google.com/earth-engine/ "Google Earth Engine API documentation")
+
+[Google Earth Engine Developers forum](https://groups.google.com/forum/#!forum/google-earth-engine-developers "Google Earth Engine Developers forum")
+
+[Example scripts from Prof. Dana Tomlin's handouts for his course on Geospatial Software Design](https://github.com/EEYale/example-scripts "Example scripts from Prof. Dana Tomlin's handouts for his course on Geospatial Software Design")
+
+- tc.chakraborty@yale.edu
