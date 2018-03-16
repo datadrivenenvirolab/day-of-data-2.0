@@ -409,12 +409,29 @@ var sumofimages = var_ImCollection.sum();
 ```javascript
 var mosaicofimages = var_ImCollection.mosaic();       
 ```
-
+---
 # Importing and exporting data
 
 [Image to table example](https://code.earthengine.google.com/7ba00e4d20acfdb3973bb0263757ecd7 "Image to table example")
 
 [Timelapse example](https://code.earthengine.google.com/3f9c9d57c08ac12f60d0f9f213a0d359 "Timelapse example")
-### Export image or table to Google Drive, Asset, or Googlr Cloud
+### Export image, video or table to Google Drive, Asset, or Google Cloud
 
 ```javascript
+Export.image.toDrive({
+  collection: var_Image, description: 'FileName', region: var_Geometry, scale: 1000}
+});
+```
+>or image.toCloudStorage, image.toAsset, table.toDrive, table.toCloudStorage, video.toCloudStorage, and video.toDrive
+
+---
+
+# Conclusion and resource
+
+[Night Lights example](https://code.earthengine.google.com/2859884e8ea9b116c2ae24c3f95ec8cb "Night Lights example") 
+- Adapted from Prof. Dana Tomlin's notes
+
+### Resources
+[Google Earth Engine API documentation] (https://developers.google.com/earth-engine/)
+[Google Earth Engine Developers forum] (https://groups.google.com/forum/#!forum/google-earth-engine-developers)
+[Example scripts from Prof. Dana Tomlin's handouts for his course on Geospatial Software Design.] (https://github.com/EEYale/example-scripts)
