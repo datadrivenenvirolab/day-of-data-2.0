@@ -30,7 +30,7 @@ Data representing lat-long coordinates
 Reference-style: 
 ![alt text][logo]
 
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+[logo]: https://github.com/datadrivenyale/day-of-data-2.0/edit/master/5-Geospatial%20analysis/images/points-vector.png "Logo Title Text 2"
 
 -Raster
 
