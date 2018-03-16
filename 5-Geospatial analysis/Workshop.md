@@ -378,6 +378,34 @@ var outputDictionary = var_Image.reduceRegion(Reducer, var_Geometry, scale);
 ### Select the first n numbers of images in a collection (based on property)
 
 ```javascript
-SelectedImages =var_ImCollection.limit (n, Property_name, Order )
+var SelectedImages =var_ImCollection.limit (n, Property_name, Order)
 ```
 
+### Select images in collection based on particular properties
+
+```javascript
+var SelectedImages = var_ImCollection.filterMetadata (Property_name, Relation , Value);
+```
+>Relations could be "equals", "less_than", "greater_than", "starts_with", "ends_with", and "contains"
+
+### Select images within date range
+```javascript
+var SelectedImages = var_ImCollection.filterDate (StartDate, StopDate);
+```
+
+### Select images within Geometry
+```javascript
+var SelectedImages = var_ImCollection.filterBounds (var_Geometry);
+```
+
+### Perform pixelwise calculations for all images in collection
+```javascript
+var sumofimages = var_ImCollection.sum();       
+```
+>or .product, .max, .min, .mean, .mode, .median, and .count     
+
+### Create composite of images in collection with the last image on top
+
+```javascript
+var sumofimages = var_ImCollection.sum();       
+```
