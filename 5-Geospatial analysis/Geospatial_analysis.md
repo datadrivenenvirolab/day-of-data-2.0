@@ -285,20 +285,20 @@ var values = var_Feature.get(''Size'');
 ### Creator a filter for values of a property 
 
 ```javascript
-var BFilter = ee.Filter.eq(Property_name, Value ) 
+var BFilter = ee.Filter.eq(Property_name, Value);
 ```
 >or .neq , .gt , .gte , .lt , and .lte
 
 ### Create a filter based on maximum difference from a threshold
 
 ```javascript
-var DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value) 
+var DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value);
 ```
 
 ### Create a text filter
 
 ```javascript
-var TxtFilter = ee.Filter.stringContains( Property_name, StringValue )    
+var TxtFilter = ee.Filter.stringContains( Property_name, StringValue);  
 ```
 
 >or .stringStartsWith, and .stringEndsWith
@@ -306,13 +306,13 @@ var TxtFilter = ee.Filter.stringContains( Property_name, StringValue )
 ### Create a range filter
 
 ```javascript
-var RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
+var RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue);
 ```
   
 ### Create a list filter to check for certain values
 
 ```javascript
-var ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2) 
+var ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2); 
 ```
 >.inList to test against list of values
 
@@ -336,9 +336,9 @@ var BoundsFilter= ee.Filter.bounds(GeometryorFeature);
 ### Combining and inversing filters
 
 ```javascript
-var NewFilter=ee.Filter.and(Listoffilters)
-var NewFilter=ee.Filter.or(Listoffilters)
-var inverseFilter = ee.Filter.not(filter)
+var NewFilter=ee.Filter.and(Listoffilters);
+var NewFilter=ee.Filter.or(Listoffilters);
+var inverseFilter = ee.Filter.not(filter);
 ```
 ---
 # Operations on Images
@@ -351,23 +351,23 @@ var band = var_Image.select(band name);
 ```
 ### Creating masks
 ```javascript
-var mask =var_Image.eq(value) 
+var mask =var_Image.eq(value); 
 ```
 >or .neq or .gt or .gte or .lt or .lte
 ### Applying masks
 ```javascript
-var masked =var_Image.mask(mask)
+var masked =var_Image.mask(mask);
 ```
 
 ### Pixelwise calculation
 ```javascript
-var results =var_Image.sum(value) 
+var results =var_Image.sum(value); 
 ```
 >or .subtract ,    .multiply ,    .divide ,    .max , .min ,  .abs ,  .round ,  .floor ,  .ceil ,  .sqrt ,  .exp,  .log, .log10, .sin ,  .cos ,  .tan ,  .sinh ,  .cosh ,  .tanh ,  .acos, .asin 
 
 ### Shift pixels of an image
 ```javascript
-newImage = oldImage.leftShift(valueofshift)                       
+newImage = oldImage.leftShift(valueofshift);                       
 ```
 >or .rightShift
 
@@ -384,7 +384,7 @@ var outputDictionary = var_Image.reduceRegion(Reducer, var_Geometry, scale);
 ### Select the first n numbers of images in a collection (based on property)
 
 ```javascript
-var SelectedImages =var_ImCollection.limit (n, Property_name, Order)
+var SelectedImages =var_ImCollection.limit (n, Property_name, Order);
 ```
 
 ### Select images in collection based on particular properties
