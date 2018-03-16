@@ -77,21 +77,21 @@ Source: Google Earth Engine User summit
 
 # Basic Functions
 
-#####  Declaring variables 
+#### Declaring variables 
 ```javascript
 var varname = Containerforvariabletype(variable name); 
 ```
-- Centering map
+#####  Centering map
 ```javascript
 Map.setCenter(long, lat, zoom level);
 ```
 >Zoom level varies from 0 (no zoom) to 20 (highest zoom level)
 
-- Displaying metadata
+###### Displaying metadata
 ```javascript
 print(variable name) 
 ```
-- Adding a layer to the map
+## Adding a layer to the map
 ```javascript
 Map.addLayer(VARIABLENAME);
 ```
