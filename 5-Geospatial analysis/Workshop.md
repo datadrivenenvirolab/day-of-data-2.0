@@ -77,47 +77,47 @@ Source: Google Earth Engine User summit
 
 # Basic Functions
 
-#### Declaring variables 
+### Declaring variables 
 ```javascript
 var varname = Containerforvariabletype(variable name); 
 ```
-#####  Centering map
+###  Centering map
 ```javascript
 Map.setCenter(long, lat, zoom level);
 ```
 >Zoom level varies from 0 (no zoom) to 20 (highest zoom level)
 
-###### Displaying metadata
+### Displaying metadata
 ```javascript
 print(variable name) 
 ```
-## Adding a layer to the map
+### Adding a layer to the map
 ```javascript
 Map.addLayer(VARIABLENAME);
 ```
 
 # Variable types in Earth Engine
 
-- Strings  
+### Strings  
 
 ```javascript
 var var_String = ee.String("This is a string. Or is it? It is."); 
 ```
-- Numbers
+### Numbers
 ```javascript
 var var_Numbers = ee.Number(5);
 ```
 
-- Arrays
+### Arrays
 ```javascript
 var var_Array = ee.Array([[5, 2, 3],  [-2, 7, 10],  [6, 6, 9]]); 
 ```
 
-- Lists
+### Lists
 ```javascript
 var var_List = ee.List([5, "five" , 6, "six"]); 
 ```
-- Dictionaries
+### Dictionaries
 ```javascript
 var var_Dictionary = ee.Dictionary({five: 5 , six: 6}); 
 ```
@@ -132,35 +132,35 @@ var var_Dictionary = ee.Dictionary({five: 5 , six: 6});
 
 # Geometries – declaration and types
 
-- Points
+### Points
 ```javascript
 var var_Point = ee.Geometry.Point(0, 45);
 ```
-- Multi Points
+### Multi Points
 ```javascript
 var var_MultiPoint = ee.Geometry.MultiPoint(0, 45, 5,6, 70,-56);
 ```
-- Line String
+### Line String
 ```javascript
 var var_LineString = ee.Geometry.LineString([[0, 45], [5,6], [70,-56]]);
 ```
-- Multi Line String
+### Multi Line String
 ```javascript
 var var_MultiLineString = ee.Geometry.MultiLineString([[[0, 45], [5,6], [70,-56]], [[0, -45], [-5,-6], [-70,56]]]);
 ```
-- Linear Ring
+### Linear Ring
 ```javascript
 var var_LinearRing = ee.Geometry.LinearRing(0, 45, 5,6, 70,-56, 0,45);
 ```
-- Rectangle
+### Rectangle
 ```javascript
 var var_Rectangle = ee.Geometry.Rectangle(0, 0, 60,30);
 ```
-- Polygon
+### Polygon
 ```javascript
 var var_Polygon = ee.Geometry.Polygon([[[0, 0], [6,3], [5, 5], [-30,2], [0,0]]]);
 ```
-- Multi Polygon
+### Multi Polygon
 ```javascript
 var var_MultiPolygon = ee.Geometry.MultiPolygon([ee.Geometry.Polygon([[0, 0], [6, 3], [5, 5], [-30, 2], [0,0]]), ee.Geometry.Polygon([[0, 0], [-6, -3], [-5, -5], [30, -2], [0, 0]])]);
 ```
@@ -178,12 +178,12 @@ var var_MultiPolygon = ee.Geometry.MultiPolygon([ee.Geometry.Polygon([[0, 0], [6
 ```javascript
 function  function_Name(Arguments) {statements};
 ```
-- Call function
+### Call function
 ```javascript
 var result = function_Name(Input);
 ```
 
-- Map function
+### Map function over Feature or Image Collection
 ```javascript
 var result = Input.map(function_Name);
 ```
@@ -192,44 +192,44 @@ var result = Input.map(function_Name);
 
 [Geometry operations](https://code.earthengine.google.com/d5d2db5aa4bea6bd94355a39e1f42a3f "EE Geometry operations")
 
-- Find area of geometry
+### Find area of geometry
 ```javascript
 var Geometry_area = var_Geometry.area();
 ```
-- Find length of line
+### Find length of line
 ```javascript
 var Line_length = var_LineString.length();
 ```
-- Find perimeter of geometry
+### Find perimeter of geometry
 ```javascript
 var Geometry_perimeter = var_Geometry.perimeter();
 ```
 
-- Reduce number of vertices in geometry
+### Reduce number of vertices in geometry
 ```javascript
 var SimplifiedGeometry = var_Geometry.simplify(100);
 ```
-- Find centroid of geometry
+### Find centroid of geometry
 ```javascript
 var Centroid = var_Geometry.centroid();
 ```
-- Create buffer around geometry
+### Create buffer around geometry
 ```javascript
 var Buffer = var_Geometry.buffer(100);
 ```
-- Find bounded rectangle of the Geometry
+### Find bounded rectangle of the Geometry
 ```javascript
 var BoundedGeometry = var_Geometry.bounds();
 ```
-- Find the smallest envelope that can envelop the Geometry
+### Find the smallest envelope that can envelop the Geometry
 ```javascript
 var Convexhull_Geometry = var_Geometry.convexHull();
 ```
-- Find common area between two or more geometries
+### Find common area between two or more geometries
 ```javascript
 var Inter_geometry = var_Geometry1.intersection(var_Geometry2);
 ```
-- Find area that includes two or more geometries
+### Find area that includes two or more geometries
 ```javascript
 var Union_geometry = var_Geometry1.union(var_Geometry2);
 ```
@@ -238,15 +238,15 @@ var Union_geometry = var_Geometry1.union(var_Geometry2);
 
 [Feature operations](https://code.earthengine.google.com/1cd4cb760f71a56dce1cabcf44feec27 "EE Feature operations")
 
-- Set property name and value of geometry to create a feature
+### Set property name and value of geometry to create a feature
 ```javascript
 var var_Feature = ee.Feature(var_Geometry, {Name: "Feature name", Size: 500};
 ```
-- Create a new feature from existing feature while renaming a property
+### Create a new feature from existing feature while renaming a property
 ```javascript
 var var_Featurenew = var_Feature.select(["Name"], ["Descriptor"]);
 ```
-- Extract values of a property from a Feature 
+### Extract values of a property from a Feature 
 ```javascript
 var values = var_Feature.get(''Size'');
 ```
@@ -254,20 +254,20 @@ var values = var_Feature.get(''Size'');
 
 # Filters
 
-- Creator a filter for values of a property 
+### Creator a filter for values of a property 
 
 ```javascript
 BFilter = ee.Filter.eq(Property_name, Value ) 
 ```
 >or .neq , .gt , .gte , .lt , and .lte
 
-- Create a filter based on maximum difference from a threshold
+### Create a filter based on maximum difference from a threshold
 
 ```javascript
 DiffFilter = ee.Filter.maxDifference(threshold, Property_name, Value) 
 ```
 
-- Create a text filter
+### Create a text filter
 
 ```javascript
 TxtFilter = ee.Filter.stringContains( Property_name, StringValue )    
@@ -275,37 +275,37 @@ TxtFilter = ee.Filter.stringContains( Property_name, StringValue )
 
 >or .stringStartsWith, and .stringEndsWith
 
-- Create a range filter
+### Create a range filter
 
 ```javascript
 RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
 ```
   
-- Create a list filter to check for certain values
+### Create a list filter to check for certain values
 
 ```javascript
 ListFilter = ee.Filter.listContains(Property_name, Value1, Property_name2, Value2) 
 ```
 >.inList to test against list of values
 
-- Create a filter of dates
+### Create a filter of dates
 
 ```javascript
 DateFilter = ee.Filter.calendarRange(StartDate, StopDate);
 ```
 
-- Create a filter for particular days of the year
+### Create a filter for particular days of the year
 
 ```javascript
 DayFilter = ee.Filter.dayOfYear(startDay, StopDay);
 ```
 
-- Create a filter to subset geospatial data
+### Create a filter to subset geospatial data
 
 ```javascript
 BoundsFilter= ee.Filter.bounds(GeometryorFeature);
 ```
--Combining and inversing filters
+### Combining and inversing filters
 
 ```javascript
 NewFilter=ee.Filter.and(Listoffilters)
@@ -315,20 +315,20 @@ inverseFilter = ee.Filter.not(filter)
 
 # Operations on Images
 
-- Selecting the bands of an image 
+### Selecting the bands of an image 
 ```javascript
 var band = var_Image.select(band name);
 ```
-- Creating masks
+### Creating masks
 ```javascript
 var mask =var_Image.eq(value) or .neq or .gt or .gte or .lt or .lte
 ```
-- Applying masks
+### Applying masks
 ```javascript
 var masked =var_Image.mask(mask)
 ```
 
-- Pixelwise calculation
+### Pixelwise calculation
 ```javascript
 var results =var_Image.sum(value) or .subtract ,    .multiply ,    .divide ,    .max , .min ,  .abs ,  .round ,  .floor ,  .ceil ,  .sqrt ,  .exp,  .log, .log10, .sin ,  .cos ,  .tan ,  .sinh ,  .cosh ,  .tanh ,  .acos, .asin 
 ```
