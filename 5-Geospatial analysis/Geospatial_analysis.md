@@ -5,6 +5,9 @@
 
 <p align="center"> <b>TC Chakraborty</b>   </p>
 
+<p align="center"> <b>Yale School of Forestry & Environmental Studies</b>   </p>
+
+<p align="center"> <b>Yale Data Driven Solutions Group</b>   </p>
 
 <br><br><br><br>
 
