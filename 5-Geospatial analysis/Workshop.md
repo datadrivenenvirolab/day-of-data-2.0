@@ -277,7 +277,7 @@ TxtFilter = ee.Filter.stringContains( Property_name, StringValue )
 - Create a range filter
 
 ```javascript
-	RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
+RangeFilter = ee.Filter.rangeContains( Property_name, StringValue, MinValue, MaxValue )  
 ```
   
 - Create a list filter to check for certain values
@@ -310,5 +310,25 @@ BoundsFilter= ee.Filter.bounds(GeometryorFeature);
 NewFilter=ee.Filter.and(Listoffilters)
 NewFilter=ee.Filter.or(Listoffilters)
 inverseFilter = ee.Filter.not(filter)
+```
+
+# Operations on Images
+
+- Selecting the bands of an image 
+```javascript
+var band = var_Image.select(band name);
+```
+- Creating masks
+```javascript
+var mask =var_Image.eq(value) or .neq or .gt or .gte or .lt or .lte
+```
+- Applying masks
+```javascript
+var masked =var_Image.mask(mask)
+```
+
+- Pixelwise calculation
+```javascript
+var results =var_Image.sum(value) or .subtract ,    .multiply ,    .divide ,    .max , .min ,  .abs ,  .round ,  .floor ,  .ceil ,  .sqrt ,  .exp,  .log, .log10, .sin ,  .cos ,  .tan ,  .sinh ,  .cosh ,  .tanh ,  .acos, .asin 
 ```
 
