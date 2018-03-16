@@ -1,0 +1,156 @@
+---
+title: "Statistical Learning"
+author: "Diego Manya"
+date: "March 16, 2018"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+#Loading libraries
+library(readr)
+library(car)
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+library(ggmap)
+
+#Retrieving data from repository
+Saopaulo <-read.csv("https://raw.githubusercontent.com/datadrivenyale/day-of-data-2.0/master/4%20-%20statistical%20learning/MSaopaulo.csv", header = TRUE, row.names = 1)
+```
+
+###########Principal Components Analysis###############
+Step 1: Pre-process
+```{r}
+#Normal quantile Plots
+par(mfrow = c(2, 2))  # 2 rows and 2 columns
+for(i in c(1:length(Saopaulo))){qqPlot(Saopaulo[,i],distribution="norm", main = colnames(Saopaulo)[i])}
+```
+Plots show that data is not normally distributed. While is not a requeriment of the method to have normally distributed data to use it, it helps to think about some potential transformations.Dur to he fact that there is quite a observations with 0 value, using log can be problematic. So we will try a different function: The inverse hyperbolic sine (asinh). 
+
+```{r}
+#Transformations
+SaopauloT <- Saopaulo
+SaopauloT[,c(3,5,10,11,12,13)]<-SaopauloT[,c(3,5,10,11,12,13)]^(1/2)
+#Normal quantile Plots of Transformed Variables
+par(mfrow = c(2, 2))  # 2 rows and 2 columns
+for(i in c(1:length(SaopauloT))){qqPlot(SaopauloT[,i],distribution="norm", main = colnames(SaopauloT)[i])}
+```
+
+After using a Square root transformation, the variables have improved in comparison to the original dataset. While we have done a very quick transformation for tis analysis, the use of PCA for other purposes like regression should involve a more cautious use of transformations.
+
+
+```{r}
+#Correlation Plots
+SaopauloT %>%
+  cor()%>%
+  melt()%>%
+  ggplot(aes(x=Var1, y=Var2, fill=value)) + geom_raster()+ scale_fill_gradient2(low = "blue", high = "red", mid = "white",midpoint = 0, limit = c(-1,1), space = "Lab", name="Pearson\nCorrelation") + theme_minimal()+ theme(axis.text.x = element_text(angle = 45, vjust = 1,size = 12, hjust = 1), axis.title.x = element_blank(),
+  axis.title.y = element_blank())
+
+#Scale
+SaopauloTS<-as.data.frame(scale(SaopauloT))
+
+```
+Not many very high correlations overall, but there are still some high correlation levels for some of the variables both positive and negative. While not the best, it indicates that there is some value in doing PCA in this dataset.
+
+Step 2: Calculate
+```{r}
+#Principal Component Function
+PCSP<-princomp(SaopauloTS)
+summary(PCSP)
+```
+The results show the number of components, equal to the number of dimensions. The first row indicates the standard deviation of each Principal Component, the second the Proporation of the Variance of the dataset explain by each component and the third row the cumulative proportion of variance explained. n this case we see that 2 PC explain around 66% of the variance of the dataset, 3 PC around 73%, and 6 PC explain almost 86%
+
+```{r}
+#Principal Component Screeplot
+screeplot(PCSP, type = "lines", pch = 16, col="red", main = "Screeplot for PCA of Sao Paulo")
+```
+The screeplot is a graphical representation of the Variance of each of the PCA. The general rule is to choose a number of PC such as the change in subsequent PC is less significant in magnitude (Residual Variance). Based on this we could select 2, or even 3 PC.
+
+
+Step 3 Interpret
+```{r}
+#Principal Component Loadings
+PCSP$loadings[,1:3]
+```
+The Principal Component Loadings are the coefficients of each variable that form the linear combination that produces the Principal Components Scores for each observation. In other words, each observation chas a corresponding PC Score that is obtained through a linear combination of all the variables using the PC Loadings.
+
+```{r}
+#Biplot of Variables
+autoplot(princomp(SaopauloTS), x=1, y=2, data = SaopauloTS, loadings = TRUE, loadings.colour = 'blue', loadings.label = TRUE, loadings.label.size = 3)
+
+```
+The biplot is a graphical representation of the PC dimensions. It plots the score for each observation and overlays the vector representing each variable. Variables that move in the same direction and have the same lenght sugguest that there might bean underlying component affecting them all or that they represent a larger aspect in the structure of the dataset. For example, in this biplot the lack of access to public services move together in the same direction, suggesting that the lack of access to one service involves lack of access to the others. Also, opposing arrows indicate that the variables move oppossite to each other, so for instance the variables Intersection density, Air Polution and Population Density are opposing those indicating lack of public services, which could suggest that those observation could have some rural features.
+
+#################CLUSTER ANALYSIS#################
+
+Step 1: Pre-process
+
+```{r}
+#SCALING#
+SaopauloS<-Saopaulo
+SaopauloS <-as.data.frame(scale(SaopauloS))
+```
+
+
+Step 2: Calculate
+This sample will use clustering technique to clasify feature based in some indicators relevant to know whether a district is urban or rural. We will use public services, proportion of people in SE levels and literacy.
+
+```{r}
+#Calculate the distance between the points
+dist.SP <- dist(SaopauloS[,c(10:17)], method = "euclidian")
+#aggregate the clusters based in a methods
+hclust.SP <- hclust(dist.SP, method = "ward.D2")
+plot(hclust.SP, ylab = "Distance", xlab = "Districts", main = 
+       "Clustering for RMSP District", cex = 0.3) 
+```
+The dendrogram shows the similarity between many of the districts of the Sao Paulo Metro Region using the multivariate distance between the variables of each observation. Observation are group as they join other observations, ththe higher the distance between the merged, the more difference between the branches. Until now, there are not really cluster properly defined, just a graphical representation of the similarity of observations. So for instance, we can see a small group of 3 districts joining the branch at around 17 units of distance. Now, we will see how many clusters to define, i.e where are we cutting the branch and define what is below as a group.
+
+```{r}
+#Hierarchical Clustering Evaluation Function
+source("https://raw.githubusercontent.com/datadrivenyale/day-of-data-2.0/master/4%20-%20statistical%20learning/hclusteval.txt")
+```
+
+```{r}
+hclusevalSP<-hclus_eval(SaopauloS[,c(10:17)], dist_m = 'euclidian', clus_m = 'ward.D2')
+#Frames for individual plotting
+  RMSSTDSP<-as.data.frame(hclusevalSP[2])
+  cluster<-as.numeric(row.names(RMSSTDSP)) #Only do once
+  colnames(RMSSTDSP) <-c("RMSSTD")
+  RMSSTDSP<-cbind(cluster,RMSSTDSP)
+#Plotting First 10 Clusters
+plot(RMSSTDSP, type = 'l', col = 'blue', xlim = c(1, 10), lwd=3)
+```
+We are interested in the blue line the Root-mean-square standard deviation (RMSSTD). This value is calculated for each potential clustering stage - as many cluster as variables - and a value is given for each number of cluster. Lower values indicate that the observations within a cluster are homogeneous, so we are looking for a low value, but not the overall minimum. The plot shows minimums at around 5, 7, 11, 16 .. until 162 with a value of 0. We will use 5 for this example.
+
+```{r}
+#Defining the number of clusters
+plot(hclust.SP, ylab = "Distance", xlab = "Districts", main = 
+       "Clustering for RMSP District", cex = 0.3) 
+rect.SP=rect.hclust(hclust.SP, 5)
+C1 <- as.data.frame(rect.SP[1])
+colnames(C1) <-c("Cluster")
+C1$Cluster<-"A"
+C2 <- as.data.frame(rect.SP[2])
+colnames(C2) <-c("Cluster")
+C2$Cluster<-"B"
+C3 <- as.data.frame(rect.SP[3])
+colnames(C3) <-c("Cluster")
+C3$Cluster<-"C"
+C4 <- as.data.frame(rect.SP[4])
+colnames(C4) <-c("Cluster")
+C4$Cluster<-"D"
+C5 <- as.data.frame(rect.SP[5])
+colnames(C5) <-c("Cluster")
+C5$Cluster<-"E"
+Cat <- rbind(C1,C2,C3,C4,C5)
+SaopauloF <- merge(Saopaulo,Cat, by=0)
+SaopauloF$Cluster<-as.factor(SaopauloF$Cluster)
+```
+
+Step 3: Interpret
+```{r}
+autoplot(princomp(SaopauloF[,c(11:19)], cor=TRUE), x=1, y=2, data = SaopauloF, loadings = TRUE, loadings.colour = 'blue', loadings.label = TRUE, loadings.label.size = 3, colour='Cluster')
+autoplot(princomp(SaopauloF[,c(11:19)], cor=TRUE), x=2, y=3, data = SaopauloF, loadings = TRUE, loadings.colour = 'blue', loadings.label = TRUE, loadings.label.size = 3, colour='Cluster')
+```
