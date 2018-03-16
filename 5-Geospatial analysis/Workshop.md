@@ -21,11 +21,11 @@ Collection, visualization, and analysis of geographical or spatial data.
 -Vector
 Data representing lat-long coordinates
 
-![Points](/images/points-vector.png "Title")
+![Points](/images/points-vector.png)
 
-![Lines](/images/line-vector.png "Title")
+![Lines](/images/line-vector.png)
 
-![Polygons](/images/polygon-vector.png "Title")
+![Polygons](/images/polygon-vector.png)
 
 
 -Raster
