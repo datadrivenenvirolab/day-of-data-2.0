@@ -13,12 +13,31 @@
 <br><br>
 <br><br><br><br>
 
+
+# Agenda
+
+- Introduction to Geospatial Analysis
+- Data Types
+- The Google Earth Engine platform
+- Basic functions
+- Variable types
+- Geometry declaration
+- Operations on Geometries
+- Features and Feature Collections
+- Operations on Features
+- Functions and mapping
+- Images and Image Collections
+- Filters
+- Exporting Data
+- Example Scripts
+
+
 # Introduction
 Collection, visualization, and analysis of geographical or spatial data.
 
 # Data types
 
--Vector
+- Vector
 Data representing lat-long coordinates
 
 ![Points](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/points-vector.png "Points")
@@ -27,7 +46,7 @@ Data representing lat-long coordinates
 
 ![Polygons](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/polygon-vector.png "Polygons")
 
--Raster
+- Raster
 
 ![Raster](https://github.com/datadrivenyale/day-of-data-2.0/blob/master/5-Geospatial%20analysis/images/Map-Algebra.png "Raster")
 
