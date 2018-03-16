@@ -16,20 +16,20 @@
 
 # Agenda
 
-###### Introduction to Geospatial Analysis
-- Data Types
-- The Google Earth Engine platform
-- Basic functions
-- Variable types
-- Geometry declaration
-- Operations on Geometries
-- Features and Feature Collections
-- Operations on Features
-- Functions and mapping
-- Images and Image Collections
-- Filters
-- Exporting Data
-- Conclusion and resources
+#### Introduction to Geospatial Analysis
+#### Data Types
+#### The Google Earth Engine platform
+#### Basic functions
+#### Variable types
+#### Geometry declaration
+#### Operations on Geometries
+#### Features and Feature Collections
+#### Operations on Features
+#### Functions and mapping
+#### Images and Image Collections
+#### Filters
+#### Exporting Data
+#### Conclusion and resources
 
 
 # Introduction
